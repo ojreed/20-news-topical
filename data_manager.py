@@ -6,8 +6,15 @@ This way we are able to preform data cleaning and Topical Modeling on this data
 Sources used:
 	https://towardsdatascience.com/end-to-end-topic-modeling-in-python-latent-dirichlet-allocation-lda-35ce4ed6b3e0
 
+Usage:
+	dm.parseGroup("./directory_name") - reads in data in target directory
+	dm.tokenize() - tokenizes the data into a corpus
+	dm.load() - helper function for pickle load
+	dm.save() - helper function for pickle dump
+	dm.genSimLDA(num_topics) - runs LDA and generates HTML representation of results
+
+
 """
-# if __name__ == '__main__':
 import pandas as pd
 import pickle
 import os
@@ -32,15 +39,15 @@ class data_manager(object):
 		self.corpus = None
 		self.id2word = None
 	
-	def add(self,group,ID,text):
+	def add(self,group,ID,text):#adds a new entry to the data frame
 		newData = {"group":group,"id":ID,"text":text}
 		self.df = self.df.append(newData,ignore_index = True)
 
-	def parseGroup(self,group):
+	def parseGroup(self,group):#parses the read in of a directory full of text data
 		for doc in os.listdir(group):
 			self.add(group,doc,self.getText(doc,group))
 
-	def getText(self,doc,group):
+	def getText(self,doc,group):#helper function to get the text from a target file and strips bad chars
 		docText = ""
 		f = open(os.path.join(group, doc), "r")
 		f.seek(0)
@@ -51,14 +58,14 @@ class data_manager(object):
 				docText += " "
 		return docText
 
-	def print(self):
+	def print(self):#data_manager print function
 		print(str(self.name) + " dataframe:")
 		print(self.df)
 
-	def output(self):
+	def output(self):#returns the df directly 
 		return self.df
 
-	def save(self, fileName = None):
+	def save(self, fileName = None):#helper function for pickle dump
 		if fileName is None:
 			fileName = self.name
 		pickle.dump(self.df, open( str(fileName)+"_df.p", "wb" ) )
@@ -66,7 +73,7 @@ class data_manager(object):
 		pickle.dump(self.id2word, open( str(fileName)+"_id2word.p", "wb" ) )
 		print(str(fileName) + " saved")
 
-	def load(self, fileName = None):
+	def load(self, fileName = None):#helper function for pickle load
 		if fileName is None:
 			fileName = self.name
 		self.df = pickle.load(open( str(fileName)+"_df.p", "rb" ) )
@@ -74,16 +81,16 @@ class data_manager(object):
 		self.id2word = pickle.load( open( str(fileName)+"_id2word.p", "rb" ) )
 		print(str(fileName) + " loaded")
 
-	def sent_to_words(self,sentences):
+	def sent_to_words(self,sentences):#helper function to ensure proper formatting of corpus 
 		for sentence in sentences:
 			# deacc=True removes punctuations
 			yield(gensim.utils.simple_preprocess(str(sentence), deacc=True))
 
-	def remove_stopwords(self,texts):
+	def remove_stopwords(self,texts):#helper function to remove stopwords
 		return [[word for word in simple_preprocess(str(doc)) 
 			if word not in self.stop_words] for doc in texts]
 
-	def tokenize(self):
+	def tokenize(self):#function to tokenize data in prep for LDA
 		data = self.df['text'].values.tolist()
 		data_words = list(self.sent_to_words(data))
 		# remove stop words
@@ -98,7 +105,7 @@ class data_manager(object):
 		# View
 		# print(corpus[:1][0][:30])
 
-	def genSimLDA(self,topics=10,vis=True):
+	def genSimLDA(self,topics=10,vis=True):#Runs the LDA using Gensim and returns as a LDAvis HTML file
 		# number of topics
 		num_topics = topics
 		# Build LDA model
