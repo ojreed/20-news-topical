@@ -29,6 +29,12 @@ import pickle
 import pyLDAvis
 import pyLDAvis.gensim_models 
 import IPython
+import numpy as np
+
+"""
+Class setup to manage the import, processing, and LDA of text data in a directory 
+	uses a 3rd party LDA from gensim 
+"""
 
 class data_manager(object):
 	def __init__(self,name):
@@ -61,6 +67,18 @@ class data_manager(object):
 	def print(self):#data_manager print function
 		print(str(self.name) + " dataframe:")
 		print(self.df)
+
+	def print_corpus(self):
+		print(self.corpus)
+
+	def get_corpus(self):
+		return self.corpus
+
+	def print_id(self):
+		print(self.id2word)
+
+	def get_id(self):
+		return self.id2word
 
 	def output(self):#returns the df directly 
 		return self.df
@@ -105,7 +123,7 @@ class data_manager(object):
 		# View
 		# print(corpus[:1][0][:30])
 
-	def genSimLDA(self,topics=10,vis=True):#Runs the LDA using Gensim and returns as a LDAvis HTML file
+	def LDA(self,topics=10,vis=True):#Runs the LDA using Gensim and returns as a LDAvis HTML file
 		# number of topics
 		num_topics = topics
 		# Build LDA model
@@ -128,6 +146,82 @@ class data_manager(object):
 				LDAvis_prepared = pickle.load(f)
 			pyLDAvis.save_html(LDAvis_prepared, './results/ldavis_prepared_'+str(self.name)+"_"+ str(num_topics) +'.html')
 			LDAvis_prepared
+
+"""
+Custom version of the data manager class that implements a custom version of LDA rather than using a gensim version
+"""
+
+class custom_manager(data_manager):
+	def __init__(self,name):
+		data_manager.__init__(self,name)
+
+	def LDA(self,topics=5,alpha = 0.2, beta = 0.001, num_iter = 100, vis = True):
+	#initilize hyperparamters
+		#topics, alpha, beta and number of iterations managed by function defualt vals
+		#Vocabulary Size	
+		V = len(self.id2word)
+		#number of documents
+		D = len(self.corpus)
+	#practical count matricies
+		# Initialize word-topic count matrix (size K x V, K = # topics, V = # vocabulary)
+		word_topic_count = np.zeros((topics,V))
+
+		# Initialize topic-document assignment matrix
+		topic_doc_assign = [np.zeros(len(sublist)) for sublist in self.corpus] 
+
+		# Initialize document-topic matrix
+		doc_topic_count = np.zeros((D,topics))
+	#randomize init word-topic
+		for doc_ind in range(D):
+			for word_ind in range(len(self.corpus[doc_ind])):
+				topic_doc_assign[doc_ind][word_ind] = np.random.choice(topics,1)
+				# Record word-topic and word-ID
+				word_topic = int(topic_doc_assign[doc_ind][word_ind])
+				word_doc_ID = self.corpus[doc_ind][word_ind]
+				
+				# Increment word-topic count matrix
+				word_topic_count[word_topic,word_doc_ID] += 1 
+	#randomize init document-topics
+		# Loop over documents (D = numb. docs)
+		for doc_ind in range(D):
+			
+			# Loop over topics (K = numb. topics)
+			for topic_ind in range(topics):
+				
+				# topic-document vector
+				topic_doc_vector = topic_doc_assign[doc_ind]
+				
+				# Update document-topic count
+				doc_topic_count[doc_ind][topic_ind] = sum(topic_doc_vector == topic_ind)
+		print(doc_topic_count)
+	#Run LDA - Main Segement
+		#loop num iter
+		for it in range(num_iter):
+			#loop documents
+			for doc_ind in range(D):
+				#loop words
+				for word_ind in range(len(self.corpus[doc_ind])):
+				#setup
+					#Initial topic-word assignment
+					init_topic = int(topic_doc_assign[doc][word])
+					#Initial word ID of word
+					wordID = self.corpus[doc_ind][word_ind]
+					# Before finiding posterior probabilities, remove current word from count matrixes
+					doc_topic_count[doc_ind][init_topic] -= 1
+						word_topic_count[init_topic][wordID] -= 1
+				#Find probability used for reassigning topics to words within document
+					#HARD MATH
+				#Compute conditional probability of assigning each topic
+					# Recall that this is obtained from gibbs sampling
+						#TODO
+					# Update topic assignment (topic can be drawn with prob. found above)
+						#TODO
+					# Add in current word back into count matrixes		
+						#TODO
+	#post process
+		#TODO
+	#HTML Visualization
+		#TODO
 
 
 
