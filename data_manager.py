@@ -86,17 +86,17 @@ class data_manager(object):
 	def save(self, fileName = None):#helper function for pickle dump
 		if fileName is None:
 			fileName = self.name
-		pickle.dump(self.df, open( str(fileName)+"_df.p", "wb" ) )
-		pickle.dump(self.corpus, open( str(fileName)+"_corpus.p", "wb" ) )
-		pickle.dump(self.id2word, open( str(fileName)+"_id2word.p", "wb" ) )
+		pickle.dump(self.df, open( "./pkl/"+str(fileName)+"_df.p", "wb" ) )
+		pickle.dump(self.corpus, open( "./pkl/"+str(fileName)+"_corpus.p", "wb" ) )
+		pickle.dump(self.id2word, open( "./pkl/"+str(fileName)+"_id2word.p", "wb" ) )
 		print(str(fileName) + " saved")
 
 	def load(self, fileName = None):#helper function for pickle load
 		if fileName is None:
 			fileName = self.name
-		self.df = pickle.load(open( str(fileName)+"_df.p", "rb" ) )
-		self.corpus = pickle.load( open( str(fileName)+"_corpus.p", "rb" ) )
-		self.id2word = pickle.load( open( str(fileName)+"_id2word.p", "rb" ) )
+		self.df = pickle.load(open( "./pkl/"+str(fileName)+"_df.p", "rb" ) )
+		self.corpus = pickle.load( open( "./pkl/"+str(fileName)+"_corpus.p", "rb" ) )
+		self.id2word = pickle.load( open( "./pkl/"+str(fileName)+"_id2word.p", "rb" ) )
 		print(str(fileName) + " loaded")
 
 	def sent_to_words(self,sentences):#helper function to ensure proper formatting of corpus 
@@ -154,8 +154,10 @@ Custom version of the data manager class that implements a custom version of LDA
 class custom_manager(data_manager):
 	def __init__(self,name):
 		data_manager.__init__(self,name)
+		self.matrix_final = None# 0 = prob_topics, 1 = word_topic_count, 2 = topic_doc_assign, 3 = doc_topic_count
+		self.theta_final = None
 
-	def LDA(self,topics=5,alpha = 0.2, beta = 0.001, num_iter = 100, vis = True):
+	def LDA(self,topics=5,alpha = 0.2, beta = 0.001, num_iter = 100):
 	#initilize hyperparamters
 		#topics, alpha, beta and number of iterations managed by function defualt vals
 		#Vocabulary Size	
@@ -167,7 +169,7 @@ class custom_manager(data_manager):
 		word_topic_count = np.zeros((topics,V))
 
 		# Initialize topic-document assignment matrix
-		topic_doc_assign = [np.zeros(len(sublist)) for sublist in self.corpus] 
+		topic_doc_assign = [np.zeros(len(doc)) for doc in self.corpus] 
 
 		# Initialize document-topic matrix
 		doc_topic_count = np.zeros((D,topics))
@@ -178,9 +180,8 @@ class custom_manager(data_manager):
 				# Record word-topic and word-ID
 				word_topic = int(topic_doc_assign[doc_ind][word_ind])
 				word_doc_ID = self.corpus[doc_ind][word_ind]
-				
 				# Increment word-topic count matrix
-				word_topic_count[word_topic,word_doc_ID] += 1 
+				word_topic_count[word_topic, word_doc_ID] += 1 
 	#randomize init document-topics
 		# Loop over documents (D = numb. docs)
 		for doc_ind in range(D):
@@ -193,7 +194,6 @@ class custom_manager(data_manager):
 				
 				# Update document-topic count
 				doc_topic_count[doc_ind][topic_ind] = sum(topic_doc_vector == topic_ind)
-		print(doc_topic_count)
 	#Run LDA - Main Segement
 		#loop num iter
 		for it in range(num_iter):
@@ -203,25 +203,93 @@ class custom_manager(data_manager):
 				for word_ind in range(len(self.corpus[doc_ind])):
 				#setup
 					#Initial topic-word assignment
-					init_topic = int(topic_doc_assign[doc][word])
+					init_topic = int(topic_doc_assign[doc_ind][word_ind])
 					#Initial word ID of word
-					wordID = self.corpus[doc_ind][word_ind]
+					wordID = self.corpus[doc_ind][word_ind][0]
 					# Before finiding posterior probabilities, remove current word from count matrixes
 					doc_topic_count[doc_ind][init_topic] -= 1
-						word_topic_count[init_topic][wordID] -= 1
-				#Find probability used for reassigning topics to words within document
-					#HARD MATH
-				#Compute conditional probability of assigning each topic
+					word_topic_count[init_topic, wordID] -= 1
+				#Find probability for reassingment based on the big equations
+					# Denominator in first term (Numb. of words in doc + numb. topics * alpha)
+					denom1 = sum(doc_topic_count[doc_ind]) + topics*alpha
+					
+					# Denominator in second term (Numb. of words in topic + numb. words in vocab * beta)
+					denom2 = np.sum(word_topic_count, axis = 1) + V*beta
+					
+
+					# Numerators, number of words assigned to a topic + prior dirichlet param
+					numerator1_temp = [doc_topic_count[doc_ind][col] for col in range(topics)] 
+					numerator1 = np.array(numerator1_temp) + alpha
+					numerator2_temp = [word_topic_count[row, wordID] for row in range(topics)]
+					numerator2 = np.array(numerator2_temp) + beta
+
+				# Compute conditional probability of assigning each topic
 					# Recall that this is obtained from gibbs sampling
-						#TODO
+					prob_topics_temp = (numerator1/denom1) * (numerator2/denom2)
+					prob_topics = prob_topics_temp/sum(prob_topics_temp)
+				
 					# Update topic assignment (topic can be drawn with prob. found above)
-						#TODO
-					# Add in current word back into count matrixes		
-						#TODO
+					update_topic_assign = np.random.choice(topics,1,list(prob_topics))
+					topic_doc_assign[doc_ind][word_ind] = update_topic_assign
+					
+					# Add in current word back into count matrixes
+					doc_topic_count[doc_ind][init_topic] += 1
+					word_topic_count[init_topic ,wordID] +=1
 	#post process
-		#TODO
-	#HTML Visualization
-		#TODO
+		# Compute posterior mean of document-topic distribution
+		theta = (doc_topic_count+alpha)
+		theta_row_sum = np.sum(theta, axis = 1)
+		theta = theta/theta_row_sum.reshape((D,1))
+
+		# Print document-topic mixture
+		print('Subset of document-topic mixture matrix: \n%s' % theta[0:30])
+		print("Word Topics")
+		print(word_topic_count)
+		print("Prob Topics")
+		print(prob_topics)
+		self.matrix_final = [prob_topics, word_topic_count, topic_doc_assign, doc_topic_count]
+	
+	def most_frequent_index(self, lst, n):
+		n_most = []
+		for word_index in range(len(lst)):#an index in the target list
+			if (len(n_most) == 0):
+					n_most = [word_index]
+			for rank_index in range(min((len(n_most),n))):#an index in the n_most ranking list
+				if (lst[word_index] > lst[n_most[rank_index]]):#compare target list value w/ current ranks value
+					n_most.insert(rank_index,word_index)
+					break 
+		return n_most[:n]
+
+
+	def visualize(self):
+		print("Most Common Words by Topics")
+		word_depth = 10 #number of most frequent words shown
+		for topic in range(len(self.matrix_final[0])): #for each topic
+			print("Topics #" + str(topic) + ":")
+			n_most = self.most_frequent_index(self.matrix_final[1][topic],word_depth)
+			for word in range(word_depth):
+				print("	" + str(word+1) + ") " + str(self.id2word[n_most[word]]) + " at " + str(round(self.matrix_final[1][topic][n_most[word]]/sum(self.matrix_final[1][topic])*100,4)) + "%")
+
+
+	def save(self, fileName = None):#helper function for pickle dump
+		if fileName is None:
+			fileName = self.name
+		pickle.dump(self.df, open( "./pkl/"+ str(fileName)+"_df.p", "wb" ) )
+		pickle.dump(self.corpus, open( "./pkl/"+ str(fileName)+"_corpus.p", "wb" ) )
+		pickle.dump(self.id2word, open( "./pkl/"+ str(fileName)+"_id2word.p", "wb" ) )
+		pickle.dump(self.theta_final, open( "./pkl/"+ str(fileName)+"_theta.p", "wb" ) )
+		pickle.dump(self.matrix_final, open( "./pkl/"+ str(fileName)+"_matrix.p", "wb" ) )
+		print(str(fileName) + " saved")
+
+	def load(self, fileName = None):#helper function for pickle load
+		if fileName is None:
+			fileName = self.name
+		self.df = pickle.load(open( "./pkl/"+str(fileName)+"_df.p", "rb" ) )
+		self.corpus = pickle.load( open( "./pkl/"+str(fileName)+"_corpus.p", "rb" ) )
+		self.id2word = pickle.load( open( "./pkl/"+str(fileName)+"_id2word.p", "rb" ) )
+		self.theta_final = pickle.load( open( "./pkl/"+str(fileName)+"_theta.p", "rb" ) )
+		self.matrix_final = pickle.load( open( "./pkl/"+str(fileName)+"_matrix.p", "rb" ) )
+		print(str(fileName) + " loaded")
 
 
 
