@@ -149,6 +149,9 @@ class data_manager(object):
 
 """
 Custom version of the data manager class that implements a custom version of LDA rather than using a gensim version
+
+Source: https://github.com/hammadshaikhha/Data-Science-and-Machine-Learning-from-Scratch/blob/master/Latent%20Dirichlet%20Allocation/Latent%20Dirichlet%20Allocation.ipynb
+
 """
 
 class custom_manager(data_manager):
@@ -156,8 +159,9 @@ class custom_manager(data_manager):
 		data_manager.__init__(self,name)
 		self.matrix_final = None# 0 = prob_topics, 1 = word_topic_count, 2 = topic_doc_assign, 3 = doc_topic_count
 		self.theta_final = None
+		self.num_topics = None  
 
-	def LDA(self,topics=5,alpha = 0.2, beta = 0.001, num_iter = 100):
+	def LDA(self,topics=5,alpha = 0.2, beta = 0.001, num_iter = 100, mode = 0):
 	#initilize hyperparamters
 		#topics, alpha, beta and number of iterations managed by function defualt vals
 		#Vocabulary Size	
@@ -242,13 +246,16 @@ class custom_manager(data_manager):
 		theta = theta/theta_row_sum.reshape((D,1))
 
 		# Print document-topic mixture
-		print('Subset of document-topic mixture matrix: \n%s' % theta[0:30])
-		print("Word Topics")
-		print(word_topic_count)
-		print("Prob Topics")
-		print(prob_topics)
+		if (mode == 1):
+			print('Subset of document-topic mixture matrix: \n%s' % theta[0:30])
+			print("Word Topics")
+			print(word_topic_count)
+			print("Prob Topics")
+			print(prob_topics)
+
 		self.matrix_final = [prob_topics, word_topic_count, topic_doc_assign, doc_topic_count]
-	
+		self.num_topics = topics
+
 	def most_frequent_index(self, lst, n):
 		n_most = []
 		for word_index in range(len(lst)):#an index in the target list
@@ -260,13 +267,31 @@ class custom_manager(data_manager):
 					break 
 		return n_most[:n]
 
+	def n_most_frequent_proportional(self,lst,topic,n):
+		n_most = []
+		n_most_scores = []
+		for word_index in range(len(lst[topic])):
+			#count of word in topic / sum of count of word in all topics
+			lst[topic][word_index]/sum([lst[other_topics][word_index] for other_topics in range(self.num_topics)])
+			word_score = lst[topic][word_index]/sum([lst[other_topics][word_index] for other_topics in range(self.num_topics)])
+			if (len(n_most) == 0):
+					n_most = [word_index]
+					n_most_scores = [word_score]
+			for rank_index in range(min((len(n_most),n))):#an index in the n_most ranking list
+				if (word_score > n_most_scores[rank_index]):#compare target list value w/ current ranks value
+					n_most.insert(rank_index,word_index)
+					n_most_scores.insert(rank_index,word_score)
+					break 
+		return n_most[:n]
 
-	def visualize(self):
+
+	def visualize(self,depth=20):
 		print("Most Common Words by Topics")
-		word_depth = 10 #number of most frequent words shown
+		word_depth = depth #number of most frequent words shown
 		for topic in range(len(self.matrix_final[0])): #for each topic
-			print("Topics #" + str(topic) + ":")
-			n_most = self.most_frequent_index(self.matrix_final[1][topic],word_depth)
+			print("Topic #" + str(topic+1) + ":")
+			# n_most = self.most_frequent_index(self.matrix_final[1][topic],word_depth)
+			n_most = self.n_most_frequent_proportional(self.matrix_final[1],topic,word_depth)
 			for word in range(word_depth):
 				print("	" + str(word+1) + ") " + str(self.id2word[n_most[word]]) + " at " + str(round(self.matrix_final[1][topic][n_most[word]]/sum(self.matrix_final[1][topic])*100,4)) + "%")
 
@@ -289,6 +314,7 @@ class custom_manager(data_manager):
 		self.id2word = pickle.load( open( "./pkl/"+str(fileName)+"_id2word.p", "rb" ) )
 		self.theta_final = pickle.load( open( "./pkl/"+str(fileName)+"_theta.p", "rb" ) )
 		self.matrix_final = pickle.load( open( "./pkl/"+str(fileName)+"_matrix.p", "rb" ) )
+		self.num_topics = self.matrix_final[0].shape[0]
 		print(str(fileName) + " loaded")
 
 
