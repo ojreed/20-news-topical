@@ -23,6 +23,7 @@ from gensim.utils import simple_preprocess
 import nltk
 nltk.download('stopwords')
 from nltk.corpus import stopwords
+from nltk.tokenize import RegexpTokenizer
 import gensim.corpora as corpora
 from pprint import pprint
 import pickle 
@@ -30,6 +31,8 @@ import pyLDAvis
 import pyLDAvis.gensim_models 
 import IPython
 import numpy as np
+import re
+
 
 """
 Class setup to manage the import, processing, and LDA of text data in a directory 
@@ -172,6 +175,86 @@ class custom_manager(data_manager):
 		self.num_topics = None 
 		self.phi = None 
 
+	def tokenize(self):#function to tokenize data in prep for LDA
+		# Load tokenizer function
+		from nltk.tokenize import RegexpTokenizer
+		tokenizer = RegexpTokenizer(r'\w+')
+
+		# Tokenizing first observation
+		tokenize_obs = tokenizer.tokenize(self.df['text'][1])
+
+		# Example of tokenizing first observation
+		print('Tokenize first observation: \n%s' % tokenize_obs)
+
+		# Load list of common stop words
+		from stop_words import get_stop_words
+
+		# Create English stop words list
+		eng_stop = [str(word) for word in get_stop_words('english')]
+
+		# Print a few stop words
+		print('Stop words in english: \n%s' % eng_stop[1:10])
+
+		# Import function for stemming text
+		from nltk.stem.porter import PorterStemmer
+
+		# Create p_stemmer of class PorterStemmer
+		p_stemmer = PorterStemmer()
+
+		# Text data to itterate over
+		text_data = [line for line in self.df['text'] if line != '']
+
+		# Convert text data into a list of comments after stop words and stemming are accounted for
+		for line in range(len(self.df)):
+			
+			# Convert comment all to lower case
+			raw_lower = text_data[line].lower()
+			
+			# Tokenize comment
+			line_token = tokenizer.tokenize(raw_lower)
+			
+			# Only keep letters in comments
+			clean_token = [re.sub(r'[^a-zA-Z]','', word) for word in line_token]
+			
+			# Take out stop words
+			stop_token = [word for word in clean_token if not word in eng_stop if word != '']
+			
+			# Take out stem words
+			stem_token = [str(p_stemmer.stem(word)) for word in stop_token]
+			
+			# Replace comment with cleaned list of words
+			text_data[line] = stop_token
+
+		# Need to convert our list of list data into single list
+		#  if words != ''
+		words_list = [words for sublist in text_data for words in sublist]
+
+		# Vocabulary is the set of unique words used
+		vocab_total = set(words_list)
+
+		# Take a look at few words
+		print('Few words from vocabulary list: \n%s' % list(vocab_total)[1:7])
+
+		# Size of vocabulary list 
+		print('Number of unique words in data: \n%s' % len(vocab_total))
+
+		# Convert each comment into a vector by replacing the words by their unique ID
+		text_ID = []
+
+		# Loop over cleaned text data
+		for line in range(len(text_data)):
+			
+			# Append comment replaced by unique word IDs
+			comment_vector = [list(vocab_total).index(words) for words in text_data[line]]
+			text_ID.append(comment_vector)
+
+		# Let's check the first comment
+		print ("The first comment (after processing) is: \n%s" % text_data[0])
+		print('First comment as a vector of word IDs is: \n%s' % text_ID[0])
+
+		self.corpus = text_ID
+		self.id2word = vocab_total
+		
 	def LDA2(self,topics=5,alpha = 0.2, beta = 0.001, num_iter = 100, mode = 0):
 		# Initialize hyperparameters in LDA
 		vocab_total = self.id2word
@@ -221,7 +304,7 @@ class custom_manager(data_manager):
 
 				# Record word-topic and word-ID
 				word_topic = int(topic_doc_assign[doc][word])
-				word_doc_ID = text_ID[doc][word][0]
+				word_doc_ID = text_ID[doc][word]#[0]
 				
 				# Increment word-topic count matrix
 				word_topic_count[word_topic,word_doc_ID] += 1
@@ -260,7 +343,7 @@ class custom_manager(data_manager):
 					init_topic_assign = int(topic_doc_assign[doc][word])
 					
 					# Initial word ID of word 
-					word_id = text_ID[doc][word][0]
+					word_id = text_ID[doc][word]#[0]
 					
 					# Before finiding posterior probabilities, remove current word from count matrixes
 					doc_topic_count[doc][init_topic_assign] -= 1
@@ -466,6 +549,34 @@ class custom_manager(data_manager):
 					break 
 		return n_most[:n]
 
+	def visualize2(self):
+		# Explore the top words that make up each topic 
+
+		# Initialize list of dictionaries
+		list_dict_topics = []
+
+		# Loop over topics
+		for topic in range(self.num_topics):
+			
+			# Initialize (vocab,prob) dictionary
+			mydict = {}
+			
+			# Loop over vocabular
+			for word in range(len(self.id2word)):
+				
+				# Create dictionary {(vocab,prob)}
+				mydict[list(self.id2word)[word]] = self.phi[topic][word]
+				
+			# Create list of dictionaries
+			list_dict_topics.append(mydict)
+		# First topic
+		# The first 10 words are ignored, because they most overlap with topic 2
+		# Commonly appearing words in topic 1
+		for topic in range(len(self.matrix_final[0])):
+			print(sorted([(value,key) for (key,value) in list_dict_topics[topic].items()])[::-1][0:30])
+			print("\n")
+		print("\n")
+		print('Subset of document-topic mixture matrix: \n%s' % self.theta_final)
 
 	def visualize(self,depth=20,mode=0):
 		print("Most Common Words by Topics")
