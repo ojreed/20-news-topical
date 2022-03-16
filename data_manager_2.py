@@ -24,7 +24,7 @@ class LDAManager():
 		self.nzw = None
 		self.nz = None
 		if reset_on_init:
-			self.main(iter=100,toy_size=10)
+			self.main(num_iter=100,toy_size=10)
 			self.save()
 		else:
 			self.load()
@@ -54,27 +54,37 @@ class LDAManager():
 		pickle.dump(self.ndz , open( "./pkl/"+str(fileName)+"_ndz.p", "wb" ) )
 		pickle.dump(self.nzw , open( "./pkl/"+str(fileName)+"_nzw.p", "wb" ) )
 		pickle.dump(self.nz , open( "./pkl/"+str(fileName)+"_nz.p", "wb" ) )
+
+		params = [self.alpha, self.beta, self.iterationNum, self.Z, self.K]
+		pickle.dump(params , open( "./pkl/"+str(fileName)+"_params.p", "wb" ) )
+
 		print(str(fileName) + " saved")
 
 	def load(self, fileName = None):#helper function for pickle load
 		if fileName is None:
 			fileName = self.name
 		self.docs     = pickle.load(open( "./pkl/"+str(fileName)+"_docs.p", "rb" ) )
-		self.id2word  = pickle.load(open( "./pkl/"+str(fileName)+"id2word.p", "rb" ) )
-		self.N        = pickle.load(open( "./pkl/"+str(fileName)+"N.p", "rb" ) )
+		self.id2word  = pickle.load(open( "./pkl/"+str(fileName)+"_id2word.p", "rb" ) )
+		self.N        = pickle.load(open( "./pkl/"+str(fileName)+"_N.p", "rb" ) )
 		self.M        = pickle.load(open( "./pkl/"+str(fileName)+"_M.p", "rb" ) )
 		self.word2id  = pickle.load(open( "./pkl/"+str(fileName)+"_word2id.p", "rb" ) )
 		self.ndz      = pickle.load(open( "./pkl/"+str(fileName)+"_ndz.p", "rb" ) )
 		self.nzw      = pickle.load(open( "./pkl/"+str(fileName)+"_nzw.p", "rb" ) )
 		self.nz       = pickle.load(open( "./pkl/"+str(fileName)+"_nz.p", "rb" ) )
-	
+		params        = pickle.load(open( "./pkl/"+str(fileName)+"_params.p", "rb" ) )
+		self.alpha        = params[0]
+		self.beta         = params[1]
+		self.iterationNum = params[2]
+		self.Z            = params[3]
+		self.K            = params[4]
+
 		print(str(fileName) + " loaded")
 
 
-	def main(self,alpha=7,beta=0.1,iter=300,K=10,toy_size=None):
+	def main(self,alpha=7,beta=0.1,num_iter=300,K=10,toy_size=None):
 		self.alpha = alpha
 		self.beta = beta
-		self.iterationNum = iter
+		self.iterationNum = num_iter
 		self.Z = []
 		self.K = K
 		group_lst = ["./20news-bydate/20news-bydate-train/alt.atheism",
@@ -83,9 +93,9 @@ class LDAManager():
 					"./20news-bydate/20news-bydate-train/talk.politics.guns",
 					"./20news-bydate/20news-bydate-train/comp.sys.mac.hardware",
 					"./20news-bydate/20news-bydate-train/sci.electronics"]
-		self.docs, word2id, id2word = self.preprocessing(group_lst,toy_size)
+		self.docs, self.word2id, self.id2word = self.preprocessing(group_lst,toy_size)
 		self.N = len(self.docs)
-		self.M = len(word2id)
+		self.M = len(self.word2id)
 		self.ndz = np.zeros([self.N, self.K]) + self.alpha
 		self.nzw = np.zeros([self.K, self.M]) + self.beta
 		self.nz = np.zeros([self.K]) + self.M * self.beta
@@ -96,13 +106,13 @@ class LDAManager():
 		 
 		topicwords = []
 		maxTopicWordsNum = 15
-		for z in range(0, K):
+		for z in range(0, self.K):
 			ids = self.nzw[z, :].argsort()
 			topicword = []
 			for j in ids:
-				topicword.insert(0, id2word[j])
+				topicword.insert(0, self.id2word[j])
 			topicwords.append(topicword[0 : min(10, len(topicword))])
-		for topic in range(K):
+		for topic in range(self.K):
 			print("Topic #" + str(topic) + " contains:")
 			print("	" + str(topicwords[topic]))
 
@@ -198,16 +208,16 @@ class LDAManager():
 				n = n + 1
 		return np.exp(ll/(-n))
 
-	def visualize():
+	def visualize(self):
 		topicwords = []
 		maxTopicWordsNum = 15
-		for z in range(0, K):
+		for z in range(0, self.K):
 			ids = self.nzw[z, :].argsort()
 			topicword = []
 			for j in ids:
-				topicword.insert(0, id2word[j])
+				topicword.insert(0, self.id2word[j])
 			topicwords.append(topicword[0 : min(10, len(topicword))])
-		for topic in range(K):
+		for topic in range(self.K):
 			print("Topic #" + str(topic) + " contains:")
 			print("	" + str(topicwords[topic]))
 
