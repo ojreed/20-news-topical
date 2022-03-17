@@ -7,7 +7,7 @@ import os
 import pickle
 
 """
-https://github.com/disadone/LDA-Gibbs-Sampling
+Implementation based on: https://github.com/disadone/LDA-Gibbs-Sampling
 """
 
 
