@@ -26,21 +26,6 @@ class LDAManager():
 		if reset_on_init:
 			self.main(num_iter=100,toy_size=10)
 			self.save()
-		else:
-			self.load()
-			self.visualize()
-
-
-	"""
-	self.docs 
-	self.id2word
-	self.N 
-	self.M 
-	self.word2id
-	self.ndz
-	self.nzw 
-	self.nz 
-	"""
 
 
 	def save(self, fileName = None):#helper function for pickle dump
@@ -96,14 +81,15 @@ class LDAManager():
 		self.docs, self.word2id, self.id2word = self.preprocessing(group_lst,toy_size)
 		self.N = len(self.docs)
 		self.M = len(self.word2id)
-		self.ndz = np.zeros([self.N, self.K]) + self.alpha
-		self.nzw = np.zeros([self.K, self.M]) + self.beta
-		self.nz = np.zeros([self.K]) + self.M * self.beta
+		self.ndz = np.zeros([self.N, self.K]) + self.alpha #Doc x Topic
+		self.nzw = np.zeros([self.K, self.M]) + self.beta  #Topic x Word
+		self.nz = np.zeros([self.K]) + self.M * self.beta  #Topic
 		self.randomInitialize()
+		#runs gibbs for each iteration
 		for i in range(0, self.iterationNum):
 			self.gibbsSampling()
 			print(time.strftime('%X'), "Iteration: ", i, " Completed", " Perplexity: ", self.perplexity())
-		 
+		#visualizes the results
 		topicwords = []
 		maxTopicWordsNum = 15
 		for z in range(0, self.K):
@@ -187,17 +173,24 @@ class LDAManager():
 	def gibbsSampling(self):
 		for d, doc in enumerate(self.docs):
 			for index, w in enumerate(doc):
+				#GET CURRENT
 				z = self.Z[d][index]
+				#REMOVE CURRENT WORD FROM THE INFO
 				self.ndz[d, z] -= 1
 				self.nzw[z, w] -= 1
 				self.nz[z] -= 1
+				#GIBBS MATH
 				pz = np.divide(np.multiply(self.ndz[d, :], self.nzw[:, w]), self.nz)
+				#CHOOSE NEW W/ NEW PROB
 				z = np.random.multinomial(1, pz / pz.sum()).argmax()
+				#CHANGE CURRENT
 				self.Z[d][index] = z 
+				#ADD BACK CURRENT WORD FROM THE INFO
 				self.ndz[d, z] += 1
 				self.nzw[z, w] += 1
 				self.nz[z] += 1
 
+	#perplexity as score for understanding progress
 	def perplexity(self):
 		nd = np.sum(self.ndz, 1)
 		n = 0
@@ -208,7 +201,8 @@ class LDAManager():
 				n = n + 1
 		return np.exp(ll/(-n))
 
-	def visualize(self):
+	def visualize_words(self):
+		#print most common words
 		topicwords = []
 		maxTopicWordsNum = 15
 		for z in range(0, self.K):
@@ -218,8 +212,23 @@ class LDAManager():
 				topicword.insert(0, self.id2word[j])
 			topicwords.append(topicword[0 : min(10, len(topicword))])
 		for topic in range(self.K):
-			print("Topic #" + str(topic) + " contains:")
+			print("Topic #" + str(topic+1) + " contains:")
 			print("	" + str(topicwords[topic]))
+	def visualize_topics(self):
+		#print Doc x Topic Distributions
+		for num, doc in enumerate(self.ndz):
+			print("Document #", num+1, ":")
+			print(np.array([np.round(topic/np.sum(doc)*100,2) for topic in doc]))
+			# for top_num, topic in enumerate(doc):
+			# 	print("	Topic #",top_num," - ",np.round(topic/np.sum(doc)*100,2),"%")
+
+		# print("Doc x Topic:\n",self.ndz)
+		# print("Topic x Word:\n",self.nzw)
+		# print("Topic:\n",self.nz)
+
+
+
+
 
 
 
