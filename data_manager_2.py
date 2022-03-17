@@ -23,8 +23,9 @@ class LDAManager():
 		self.ndz= None
 		self.nzw = None
 		self.nz = None
+		self.topicNames = []
 		if reset_on_init:
-			self.main(num_iter=100,toy_size=10)
+			self.main(num_iter=100,toy_size=100)
 			self.save()
 
 
@@ -39,6 +40,7 @@ class LDAManager():
 		pickle.dump(self.ndz , open( "./pkl/"+str(fileName)+"_ndz.p", "wb" ) )
 		pickle.dump(self.nzw , open( "./pkl/"+str(fileName)+"_nzw.p", "wb" ) )
 		pickle.dump(self.nz , open( "./pkl/"+str(fileName)+"_nz.p", "wb" ) )
+		pickle.dump(self.topicNames , open( "./pkl/"+str(fileName)+"_topicNames.p", "wb" ) )
 
 		params = [self.alpha, self.beta, self.iterationNum, self.Z, self.K]
 		pickle.dump(params , open( "./pkl/"+str(fileName)+"_params.p", "wb" ) )
@@ -48,15 +50,16 @@ class LDAManager():
 	def load(self, fileName = None):#helper function for pickle load
 		if fileName is None:
 			fileName = self.name
-		self.docs     = pickle.load(open( "./pkl/"+str(fileName)+"_docs.p", "rb" ) )
-		self.id2word  = pickle.load(open( "./pkl/"+str(fileName)+"_id2word.p", "rb" ) )
-		self.N        = pickle.load(open( "./pkl/"+str(fileName)+"_N.p", "rb" ) )
-		self.M        = pickle.load(open( "./pkl/"+str(fileName)+"_M.p", "rb" ) )
-		self.word2id  = pickle.load(open( "./pkl/"+str(fileName)+"_word2id.p", "rb" ) )
-		self.ndz      = pickle.load(open( "./pkl/"+str(fileName)+"_ndz.p", "rb" ) )
-		self.nzw      = pickle.load(open( "./pkl/"+str(fileName)+"_nzw.p", "rb" ) )
-		self.nz       = pickle.load(open( "./pkl/"+str(fileName)+"_nz.p", "rb" ) )
-		params        = pickle.load(open( "./pkl/"+str(fileName)+"_params.p", "rb" ) )
+		self.docs         = pickle.load(open( "./pkl/"+str(fileName)+"_docs.p", "rb" ) )
+		self.id2word      = pickle.load(open( "./pkl/"+str(fileName)+"_id2word.p", "rb" ) )
+		self.N            = pickle.load(open( "./pkl/"+str(fileName)+"_N.p", "rb" ) )
+		self.M            = pickle.load(open( "./pkl/"+str(fileName)+"_M.p", "rb" ) )
+		self.word2id      = pickle.load(open( "./pkl/"+str(fileName)+"_word2id.p", "rb" ) )
+		self.ndz          = pickle.load(open( "./pkl/"+str(fileName)+"_ndz.p", "rb" ) )
+		self.nzw          = pickle.load(open( "./pkl/"+str(fileName)+"_nzw.p", "rb" ) )
+		self.nz           = pickle.load(open( "./pkl/"+str(fileName)+"_nz.p", "rb" ) )
+		self.topicNames   = pickle.load(open( "./pkl/"+str(fileName)+"_topicNames.p", "rb" ) )
+		params            = pickle.load(open( "./pkl/"+str(fileName)+"_params.p", "rb" ) )
 		self.alpha        = params[0]
 		self.beta         = params[1]
 		self.iterationNum = params[2]
@@ -97,7 +100,7 @@ class LDAManager():
 			topicword = []
 			for j in ids:
 				topicword.insert(0, self.id2word[j])
-			topicwords.append(topicword[0 : min(10, len(topicword))])
+			topicwords.append(topicword[0 : min(maxTopicWordsNum, len(topicword))])
 		for topic in range(self.K):
 			print("Topic #" + str(topic) + " contains:")
 			print("	" + str(topicwords[topic]))
@@ -146,6 +149,7 @@ class LDAManager():
 			segList = jieba.cut(document)
 			for word in segList: 
 				word = word.lower().strip()
+				word = re.sub(r'[^a-zA-Z]','', word)
 				if len(word) > 1 and not re.search('[0-9]', word) and word not in stopwords:
 					if word in word2id:
 						currentDocument.append(word2id[word])
@@ -210,21 +214,37 @@ class LDAManager():
 			topicword = []
 			for j in ids:
 				topicword.insert(0, self.id2word[j])
-			topicwords.append(topicword[0 : min(10, len(topicword))])
+			topicwords.append(topicword[0 : min(maxTopicWordsNum, len(topicword))])
 		for topic in range(self.K):
-			print("Topic #" + str(topic+1) + " contains:")
-			print("	" + str(topicwords[topic]))
+			if len(self.topicNames) == self.K:
+				print("Topic '" + self.topicNames[topic] + "' contains:")
+				print("	" + str(topicwords[topic]))
+			else:
+				print("Topic #" + str(topic+1) + " contains:")
+				print("	" + str(topicwords[topic]))
+
 	def visualize_topics(self):
 		#print Doc x Topic Distributions
 		for num, doc in enumerate(self.ndz):
 			print("Document #", num+1, ":")
 			print(np.array([np.round(topic/np.sum(doc)*100,2) for topic in doc]))
-			# for top_num, topic in enumerate(doc):
-			# 	print("	Topic #",top_num," - ",np.round(topic/np.sum(doc)*100,2),"%")
 
-		# print("Doc x Topic:\n",self.ndz)
-		# print("Topic x Word:\n",self.nzw)
-		# print("Topic:\n",self.nz)
+	def name_topics(self):
+		self.topicNames = []
+		topicwords = []
+		maxTopicWordsNum = 50
+		for z in range(0, self.K):
+			ids = self.nzw[z, :].argsort()
+			topicword = []
+			for j in ids:
+				topicword.insert(0, self.id2word[j])
+			topicwords.append(topicword[0 : min(maxTopicWordsNum, len(topicword))])
+		for topic in range(self.K):
+			print("Generate a name for:")
+			print(topicwords[topic])
+			self.topicNames.append(input())
+
+
 
 
 
