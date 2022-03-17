@@ -70,11 +70,13 @@ class LDAManager():
 
 
 	def main(self,alpha=7,beta=0.1,num_iter=300,K=10,toy_size=None):
+		#INIT PARAMS
 		self.alpha = alpha
 		self.beta = beta
 		self.iterationNum = num_iter
 		self.Z = []
 		self.K = K
+		#LIST OF INPUT TEXT
 		group_lst = ["./20news-bydate/20news-bydate-train/alt.atheism",
 					"./20news-bydate/20news-bydate-train/misc.forsale",
 					"./20news-bydate/20news-bydate-train/rec.sport.hockey",
@@ -82,8 +84,8 @@ class LDAManager():
 					"./20news-bydate/20news-bydate-train/comp.sys.mac.hardware",
 					"./20news-bydate/20news-bydate-train/sci.electronics"]
 		self.docs, self.word2id, self.id2word = self.preprocessing(group_lst,toy_size)
-		self.N = len(self.docs)
-		self.M = len(self.word2id)
+		self.N = len(self.docs) #Number of Documents
+		self.M = len(self.word2id) #Number of Words
 		self.ndz = np.zeros([self.N, self.K]) + self.alpha #Doc x Topic
 		self.nzw = np.zeros([self.K, self.M]) + self.beta  #Topic x Word
 		self.nz = np.zeros([self.K]) + self.M * self.beta  #Topic
@@ -135,19 +137,23 @@ class LDAManager():
 		stopwords = [str(word) for word in get_stop_words('english')]
 		stopwords.extend(['from', 'subject', 're', 'edu', 'use', 'com', 'org'])
 		
-		
+		#read in each group of text
 		documents = []
 		for name in group_lst:
 			documents += self.parseGroup(name,toy_size)
+
+		#init containers 
 		word2id = {}
 		id2word = {}
 		self.docs = []
 		currentDocument = []
 		currentWordId = 0
 		
+		#tokenizes the data
 		for document in documents:
 			segList = jieba.cut(document)
 			for word in segList: 
+				#simplify to just words
 				word = word.lower().strip()
 				word = re.sub(r'[^a-zA-Z]','', word)
 				if len(word) > 1 and not re.search('[0-9]', word) and word not in stopwords:
@@ -162,6 +168,7 @@ class LDAManager():
 			currentDocument = []
 		return self.docs, word2id, id2word
 		
+	#creates an initial state for each of the matricies we are working with
 	def randomInitialize(self):
 		for d, doc in enumerate(self.docs):
 			zCurrentDoc = []
@@ -194,7 +201,7 @@ class LDAManager():
 				self.nzw[z, w] += 1
 				self.nz[z] += 1
 
-	#perplexity as score for understanding progress
+	#perplexity as score for understanding progress --> the lower the better
 	def perplexity(self):
 		nd = np.sum(self.ndz, 1)
 		n = 0
