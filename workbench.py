@@ -7,8 +7,8 @@ LDA = dm.LDAManager("All_Broad_Topics_Improved_Tokenization_2")
 # LDA.save()
 #LOAD AND VISUALIZE
 LDA.load()
+LDA.visualize_topics()
 LDA.visualize_words(20)
-# LDA.visualize_topics()
 #LABEL
 # LDA.name_topics()
 LDA.save()

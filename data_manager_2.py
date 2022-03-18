@@ -225,15 +225,23 @@ class LDAManager():
 			if len(self.topicNames) == self.K:
 				print("Topic '" + self.topicNames[topic] + "' contains:")
 				print("	" + str(topicwords[topic]))
+				print("\n")
 			else:
 				print("Topic #" + str(topic+1) + " contains:")
 				print("	" + str(topicwords[topic]))
+				print("\n")
 
 	def visualize_topics(self):
 		#print Doc x Topic Distributions
 		for num, doc in enumerate(self.ndz):
 			print("Document #", num+1, ":")
-			print(np.array([np.round(topic/np.sum(doc)*100,2) for topic in doc]))
+			doc_topics = np.array([np.round(topic/np.sum(doc)*100,2) for topic in doc])
+			print(doc_topics)
+			if (len(self.topicNames)==self.K):
+				print("	Most Common Topic: ",self.topicNames[np.argmax(doc_topics)])
+			else:
+				print("	Most Common Topic: #",np.argmax(doc_topics))
+		print("\n")
 
 	def name_topics(self):
 		self.topicNames = []
