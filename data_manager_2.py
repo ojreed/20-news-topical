@@ -212,10 +212,9 @@ class LDAManager():
 				n = n + 1
 		return np.exp(ll/(-n))
 
-	def visualize_words(self):
+	def visualize_words(self,maxTopicWordsNum = 15):
 		#print most common words
 		topicwords = []
-		maxTopicWordsNum = 15
 		for z in range(0, self.K):
 			ids = self.nzw[z, :].argsort()
 			topicword = []
