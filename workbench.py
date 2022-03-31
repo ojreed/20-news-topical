@@ -15,6 +15,6 @@ LDA.load()
 #TEST SET
 LDA.initTestSet(50)
 # print(LDA.testSet)
-LDA.labelTestCorpus()
+LDA.labelTestCorpus(1)
 LDA.save()
 

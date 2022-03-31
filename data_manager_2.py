@@ -29,7 +29,6 @@ class LDAManager():
 			self.main(num_iter=100,toy_size=100)
 			self.save()
 
-
 	def save(self, fileName = None):#helper function for pickle dump
 		if fileName is None:
 			fileName = self.name
@@ -145,19 +144,17 @@ class LDAManager():
 			currentDocument = []
 		self.testSet = docs
 
-	def labelTestCorpus(self,treshhold=35):
+	def labelTestCorpus(self,treshhold=1):
 		docTopicPredictions = []
-		counter = 0
-		for doc in self.testSet:
+		for doc in self.testSet: #loop through all docs
 			docTopicCount = [0 for x in range(self.K)]
-			for word in doc[0]:
-				for topic in range(self.K):
+			for word in doc[0]: #check each word in the doc
+				for topic in range(self.K): #see if it is popular in each of the topics
 					if self.nzw[topic,word] >= treshhold:
-						docTopicCount[topic] +=1
+						docTopicCount[topic] +=1 #if it is above the hyper param threshold then we increment topic distribution
 			docTopicPredictions.append((docTopicCount,doc[1]))
 		for num, doc in enumerate(docTopicPredictions):
 			print("Document",str(num+1)+":\n   Actual Topic:",doc[1].split(".")[-1],"\n   Predicted Topic:",self.topicNames[doc[0].index(max(doc[0]))])
-
 
 	def getText(self,doc,group):#helper function to get the text from a target file and strips bad chars
 			docText = ""
@@ -219,7 +216,7 @@ class LDAManager():
 				word = word.lower().strip()
 				word = re.sub(r'[^a-zA-Z]','', word)
 				if len(word) > 1 and not re.search('[0-9]', word) and word not in stopwords:
-					if word in word2id:
+					if word in word2id: 
 						currentDocument.append(word2id[word])
 					else:
 						currentDocument.append(currentWordId)
