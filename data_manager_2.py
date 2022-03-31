@@ -24,6 +24,7 @@ class LDAManager():
 		self.nzw = None
 		self.nz = None
 		self.topicNames = []
+		self.testSet = None
 		if reset_on_init:
 			self.main(num_iter=100,toy_size=100)
 			self.save()
@@ -41,6 +42,7 @@ class LDAManager():
 		pickle.dump(self.nzw , open( "./pkl/"+str(fileName)+"_nzw.p", "wb" ) )
 		pickle.dump(self.nz , open( "./pkl/"+str(fileName)+"_nz.p", "wb" ) )
 		pickle.dump(self.topicNames , open( "./pkl/"+str(fileName)+"_topicNames.p", "wb" ) )
+		pickle.dump(self.testSet , open( "./pkl/"+str(fileName)+"_testSet.p", "wb" ) )
 
 		params = [self.alpha, self.beta, self.iterationNum, self.Z, self.K]
 		pickle.dump(params , open( "./pkl/"+str(fileName)+"_params.p", "wb" ) )
@@ -59,6 +61,7 @@ class LDAManager():
 		self.nzw          = pickle.load(open( "./pkl/"+str(fileName)+"_nzw.p", "rb" ) )
 		self.nz           = pickle.load(open( "./pkl/"+str(fileName)+"_nz.p", "rb" ) )
 		self.topicNames   = pickle.load(open( "./pkl/"+str(fileName)+"_topicNames.p", "rb" ) )
+		self.testSet      = pickle.load(open( "./pkl/"+str(fileName)+"_testSet.p", "rb" ) )
 		params            = pickle.load(open( "./pkl/"+str(fileName)+"_params.p", "rb" ) )
 		self.alpha        = params[0]
 		self.beta         = params[1]
@@ -67,7 +70,6 @@ class LDAManager():
 		self.K            = params[4]
 
 		print(str(fileName) + " loaded")
-
 
 	def main(self,alpha=7,beta=0.1,num_iter=300,K=10,toy_size=None):
 		#INIT PARAMS
@@ -107,6 +109,56 @@ class LDAManager():
 			print("Topic #" + str(topic) + " contains:")
 			print("	" + str(topicwords[topic]))
 
+	def initTestSet(self,toy_size=None): #initialzies a test set for our model
+		group_lst = ["./20news-bydate/20news-bydate-test/alt.atheism",
+					"./20news-bydate/20news-bydate-test/misc.forsale",
+					"./20news-bydate/20news-bydate-test/rec.sport.hockey",
+					"./20news-bydate/20news-bydate-test/talk.politics.guns",
+					"./20news-bydate/20news-bydate-test/comp.sys.mac.hardware",
+					"./20news-bydate/20news-bydate-test/sci.electronics"]
+		from stop_words import get_stop_words
+
+		# Create English stop words list
+		stopwords = [str(word) for word in get_stop_words('english')]
+		stopwords.extend(['from', 'subject', 're', 'edu', 'use', 'com', 'org'])
+		
+		#read in each group of text
+		documents = []
+		for name in group_lst:
+			documents += self.parseGroupTest(name,toy_size)
+		
+		#init containers 
+		docs = []
+		currentDocument = []
+
+		#tokenizes the data
+		for document in documents:
+			segList = jieba.cut(document[0])
+			for word in segList: 
+				#simplify to just words
+				word = word.lower().strip()
+				word = re.sub(r'[^a-zA-Z]','', word)
+				if len(word) > 1 and not re.search('[0-9]', word) and word not in stopwords:
+					if word in self.word2id:
+						currentDocument.append(self.word2id[word])
+			docs.append((currentDocument,document[1]));
+			currentDocument = []
+		self.testSet = docs
+
+	def labelTestCorpus(self,treshhold=35):
+		docTopicPredictions = []
+		counter = 0
+		for doc in self.testSet:
+			docTopicCount = [0 for x in range(self.K)]
+			for word in doc[0]:
+				for topic in range(self.K):
+					if self.nzw[topic,word] >= treshhold:
+						docTopicCount[topic] +=1
+			docTopicPredictions.append((docTopicCount,doc[1]))
+		for num, doc in enumerate(docTopicPredictions):
+			print("Document",str(num+1)+":\n   Actual Topic:",doc[1].split(".")[-1],"\n   Predicted Topic:",self.topicNames[doc[0].index(max(doc[0]))])
+
+
 	def getText(self,doc,group):#helper function to get the text from a target file and strips bad chars
 			docText = ""
 			f = open(os.path.join(group, doc), "r")
@@ -124,6 +176,16 @@ class LDAManager():
 		counter = 0
 		for doc in os.listdir(group):
 			documents.append(self.getText(doc,group))
+			counter+=1
+			if (counter == toy_limit):
+				break
+		return documents
+
+	def parseGroupTest(self,group,toy_limit=None):#parses the read in of a directory w/ labeled actual topics
+		documents = []
+		counter = 0
+		for doc in os.listdir(group):
+			documents.append((self.getText(doc,group),group))
 			counter+=1
 			if (counter == toy_limit):
 				break
@@ -167,9 +229,8 @@ class LDAManager():
 			self.docs.append(currentDocument);
 			currentDocument = []
 		return self.docs, word2id, id2word
-		
-	#creates an initial state for each of the matricies we are working with
-	def randomInitialize(self):
+			
+	def randomInitialize(self): #creates an initial state for each of the matricies we are working with
 		for d, doc in enumerate(self.docs):
 			zCurrentDoc = []
 			for w in doc:
@@ -201,8 +262,7 @@ class LDAManager():
 				self.nzw[z, w] += 1
 				self.nz[z] += 1
 
-	#perplexity as score for understanding progress --> the lower the better
-	def perplexity(self):
+	def perplexity(self): #perplexity as score for understanding progress --> the lower the better
 		nd = np.sum(self.ndz, 1)
 		n = 0
 		ll = 0.0
