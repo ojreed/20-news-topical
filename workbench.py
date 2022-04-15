@@ -13,8 +13,9 @@ LDA.load()
 # LDA.name_topics()
 # LDA.save()
 #TEST SET
-LDA.initTestSet(50)
+LDA.initTestSet(70)
 # print(LDA.testSet)
-LDA.labelTestCorpus(1)
+LDA.labelTestCorpus()
+LDA.produce_csv()
 LDA.save()
 

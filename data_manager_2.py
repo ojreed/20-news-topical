@@ -5,6 +5,7 @@ import jieba
 import re
 import os
 import pickle
+import pandas as pd
 
 """
 Implementation based on: https://github.com/disadone/LDA-Gibbs-Sampling
@@ -25,6 +26,7 @@ class LDAManager():
 		self.nz = None
 		self.topicNames = []
 		self.testSet = None
+		self.predictions = None
 		if reset_on_init:
 			self.main(num_iter=100,toy_size=100)
 			self.save()
@@ -42,6 +44,7 @@ class LDAManager():
 		pickle.dump(self.nz , open( "./pkl/"+str(fileName)+"_nz.p", "wb" ) )
 		pickle.dump(self.topicNames , open( "./pkl/"+str(fileName)+"_topicNames.p", "wb" ) )
 		pickle.dump(self.testSet , open( "./pkl/"+str(fileName)+"_testSet.p", "wb" ) )
+		pickle.dump(self.predictions, open( "./pkl/"+str(fileName)+"_predictions.p", "wb" ) )
 
 		params = [self.alpha, self.beta, self.iterationNum, self.Z, self.K]
 		pickle.dump(params , open( "./pkl/"+str(fileName)+"_params.p", "wb" ) )
@@ -61,6 +64,7 @@ class LDAManager():
 		self.nz           = pickle.load(open( "./pkl/"+str(fileName)+"_nz.p", "rb" ) )
 		self.topicNames   = pickle.load(open( "./pkl/"+str(fileName)+"_topicNames.p", "rb" ) )
 		self.testSet      = pickle.load(open( "./pkl/"+str(fileName)+"_testSet.p", "rb" ) )
+		self.predictions  = pickle.load(open( "./pkl/"+str(fileName)+"_predictions.p", "rb" ) )
 		params            = pickle.load(open( "./pkl/"+str(fileName)+"_params.p", "rb" ) )
 		self.alpha        = params[0]
 		self.beta         = params[1]
@@ -114,7 +118,8 @@ class LDAManager():
 					"./20news-bydate/20news-bydate-test/rec.sport.hockey",
 					"./20news-bydate/20news-bydate-test/talk.politics.guns",
 					"./20news-bydate/20news-bydate-test/comp.sys.mac.hardware",
-					"./20news-bydate/20news-bydate-test/sci.electronics"]
+					"./20news-bydate/20news-bydate-test/sci.electronics",
+					"./20news-bydate/20news-bydate-test/sci.space"] #ADDED TO TEST DYNAMIC TOPIC
 		from stop_words import get_stop_words
 
 		# Create English stop words list
@@ -146,6 +151,8 @@ class LDAManager():
 
 	def labelTestCorpus(self,treshhold=1):
 		docTopicPredictions = []
+		correct = 0
+		total = 0
 		for doc in self.testSet: #loop through all docs
 			docTopicCount = [0 for x in range(self.K)]
 			for word in doc[0]: #check each word in the doc
@@ -155,6 +162,16 @@ class LDAManager():
 			docTopicPredictions.append((docTopicCount,doc[1]))
 		for num, doc in enumerate(docTopicPredictions):
 			print("Document",str(num+1)+":\n   Actual Topic:",doc[1].split(".")[-1],"\n   Predicted Topic:",self.topicNames[doc[0].index(max(doc[0]))])
+			total +=1 
+			if (doc[1].split(".")[-1] == self.topicNames[doc[0].index(max(doc[0]))]):
+				correct+=1
+			#hard coded topic name fixes
+			elif ((doc[1].split(".")[-1] == "hardware" and self.topicNames[doc[0].index(max(doc[0]))]) == "apple hardware"):
+				correct+=1
+			elif ((doc[1].split(".")[-1] == "forsale" and self.topicNames[doc[0].index(max(doc[0]))]) == "for sale"):
+				correct+=1
+		print("correct =",correct/total)
+		self.predictions = [docTopicPredictions,correct/total]
 
 	def getText(self,doc,group):#helper function to get the text from a target file and strips bad chars
 			docText = ""
@@ -288,6 +305,7 @@ class LDAManager():
 				print("	" + str(topicwords[topic]))
 				print("\n")
 
+
 	def visualize_topics(self):
 		#print Doc x Topic Distributions
 		for num, doc in enumerate(self.ndz):
@@ -314,6 +332,47 @@ class LDAManager():
 			print("Generate a name for:")
 			print(topicwords[topic])
 			self.topicNames.append(input())
+
+	def produce_csv(self):
+		self.train_document_topics_csv() #train: doc | topic | distributions
+		self.document_topics_csv() #test: doc | topic | distributions
+		self.topic_words_csv() #topic: words
+
+	def train_document_topics_csv(self):
+		col_names = ["document","actual"]
+		col_names += self.topicNames
+		df = pd.DataFrame(columns = col_names) 
+		for num, doc in enumerate(self.ndz):
+			doc_topics =[np.round(topic/np.sum(doc)*100,2) for topic in doc]
+			newRow = [num, self.topicNames[np.argmax(doc_topics)]]
+			newRow += doc_topics
+			df.loc[len(df.index)] = newRow
+		print(df)
+		df.to_csv('data/train_documents.csv', index=False)
+
+	def document_topics_csv(self):
+		col_names = ["document","actual","labeled"]
+		col_names += self.topicNames
+		df = pd.DataFrame(columns = col_names) 
+		for num, doc in enumerate(self.predictions[0]):
+			newRow = [num,doc[1].split("/")[-1], self.topicNames[doc[0].index(max(doc[0]))]]
+			newRow += doc[0]
+			df.loc[len(df.index)] = newRow
+		print(df)
+		df.to_csv('data/labeled_documents.csv', index=False)
+
+	def topic_words_csv(self): 
+		maxTopicWordsNum = 50
+		topicwords = []
+		for z in range(0, self.K):
+			ids = self.nzw[z, :].argsort()
+			topicword = []
+			for j in ids:
+				topicword.insert(0, self.id2word[j])
+			topicwords.append(topicword[0 : min(maxTopicWordsNum, len(topicword))])
+		df = pd.DataFrame(topicwords,self.topicNames)
+		print(df)
+		df.to_csv('data/topics.csv')
 
 
 
