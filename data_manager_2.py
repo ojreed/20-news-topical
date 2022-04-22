@@ -118,8 +118,7 @@ class LDAManager():
 					"./20news-bydate/20news-bydate-test/rec.sport.hockey",
 					"./20news-bydate/20news-bydate-test/talk.politics.guns",
 					"./20news-bydate/20news-bydate-test/comp.sys.mac.hardware",
-					"./20news-bydate/20news-bydate-test/sci.electronics",
-					"./20news-bydate/20news-bydate-test/sci.space"] #ADDED TO TEST DYNAMIC TOPIC
+					"./20news-bydate/20news-bydate-test/sci.electronics"]
 		from stop_words import get_stop_words
 
 		# Create English stop words list
