@@ -14,22 +14,23 @@ Implementation based on: https://github.com/disadone/LDA-Gibbs-Sampling
 
 class LDAManager():
 
-	def __init__(self,name,reset_on_init=False):
+	def __init__(self,name,saftey=True):
 		self.name = name
 		self.docs = None
 		self.id2word = None
 		self.N = None
 		self.M = None
 		self.word2id = None
-		self.ndz= None
+		self.ndz = None
 		self.nzw = None
 		self.nz = None
 		self.topicNames = []
 		self.testSet = None
 		self.predictions = None
-		if reset_on_init:
-			self.main(num_iter=100,toy_size=100)
-			self.save()
+		self.dataGroup = []
+		self.shortDataGroup = []
+		if saftey:#by default tries to load a previous version to prevent accidental overwrites
+			self.load()
 
 	def save(self, fileName = None):#helper function for pickle dump
 		if fileName is None:
@@ -45,6 +46,8 @@ class LDAManager():
 		pickle.dump(self.topicNames , open( "./pkl/"+str(fileName)+"_topicNames.p", "wb" ) )
 		pickle.dump(self.testSet , open( "./pkl/"+str(fileName)+"_testSet.p", "wb" ) )
 		pickle.dump(self.predictions, open( "./pkl/"+str(fileName)+"_predictions.p", "wb" ) )
+		pickle.dump(self.dataGroup, open( "./pkl/"+str(fileName)+"_dataGroup.p", "wb" ) )
+		pickle.dump(self.shortDataGroup, open( "./pkl/"+str(fileName)+"_shortDataGroup.p", "wb" ) )
 
 		params = [self.alpha, self.beta, self.iterationNum, self.Z, self.K]
 		pickle.dump(params , open( "./pkl/"+str(fileName)+"_params.p", "wb" ) )
@@ -54,27 +57,30 @@ class LDAManager():
 	def load(self, fileName = None):#helper function for pickle load
 		if fileName is None:
 			fileName = self.name
-		self.docs         = pickle.load(open( "./pkl/"+str(fileName)+"_docs.p", "rb" ) )
-		self.id2word      = pickle.load(open( "./pkl/"+str(fileName)+"_id2word.p", "rb" ) )
-		self.N            = pickle.load(open( "./pkl/"+str(fileName)+"_N.p", "rb" ) )
-		self.M            = pickle.load(open( "./pkl/"+str(fileName)+"_M.p", "rb" ) )
-		self.word2id      = pickle.load(open( "./pkl/"+str(fileName)+"_word2id.p", "rb" ) )
-		self.ndz          = pickle.load(open( "./pkl/"+str(fileName)+"_ndz.p", "rb" ) )
-		self.nzw          = pickle.load(open( "./pkl/"+str(fileName)+"_nzw.p", "rb" ) )
-		self.nz           = pickle.load(open( "./pkl/"+str(fileName)+"_nz.p", "rb" ) )
-		self.topicNames   = pickle.load(open( "./pkl/"+str(fileName)+"_topicNames.p", "rb" ) )
-		self.testSet      = pickle.load(open( "./pkl/"+str(fileName)+"_testSet.p", "rb" ) )
-		self.predictions  = pickle.load(open( "./pkl/"+str(fileName)+"_predictions.p", "rb" ) )
-		params            = pickle.load(open( "./pkl/"+str(fileName)+"_params.p", "rb" ) )
-		self.alpha        = params[0]
-		self.beta         = params[1]
-		self.iterationNum = params[2]
-		self.Z            = params[3]
-		self.K            = params[4]
+		self.docs           = pickle.load(open( "./pkl/"+str(fileName)+"_docs.p", "rb" ) )
+		self.id2word        = pickle.load(open( "./pkl/"+str(fileName)+"_id2word.p", "rb" ) )
+		self.N              = pickle.load(open( "./pkl/"+str(fileName)+"_N.p", "rb" ) )
+		self.M              = pickle.load(open( "./pkl/"+str(fileName)+"_M.p", "rb" ) )
+		self.word2id        = pickle.load(open( "./pkl/"+str(fileName)+"_word2id.p", "rb" ) )
+		self.ndz            = pickle.load(open( "./pkl/"+str(fileName)+"_ndz.p", "rb" ) )
+		self.nzw            = pickle.load(open( "./pkl/"+str(fileName)+"_nzw.p", "rb" ) )
+		self.nz             = pickle.load(open( "./pkl/"+str(fileName)+"_nz.p", "rb" ) )
+		self.topicNames     = pickle.load(open( "./pkl/"+str(fileName)+"_topicNames.p", "rb" ) )
+		self.testSet        = pickle.load(open( "./pkl/"+str(fileName)+"_testSet.p", "rb" ) )
+		self.predictions    = pickle.load(open( "./pkl/"+str(fileName)+"_predictions.p", "rb" ) )
+		self.dataGroup      = pickle.load(open( "./pkl/"+str(fileName)+"_dataGroup.p", "rb" ) )
+		self.shortDataGroup = pickle.load(open( "./pkl/"+str(fileName)+"_shortDataGroup.p", "rb" ) )
+		params              = pickle.load(open( "./pkl/"+str(fileName)+"_params.p", "rb" ) )
+		self.alpha          = params[0]
+		self.beta           = params[1]
+		self.iterationNum   = params[2]
+		self.Z              = params[3]
+		self.K              = params[4]
 
 		print(str(fileName) + " loaded")
 
-	def main(self,alpha=7,beta=0.1,num_iter=300,K=10,toy_size=None):
+
+	def main(self,alpha=7,beta=0.1,num_iter=300,K=10,toy_size=None,skew=False):
 		#INIT PARAMS
 		self.alpha = alpha
 		self.beta = beta
@@ -82,13 +88,8 @@ class LDAManager():
 		self.Z = []
 		self.K = K
 		#LIST OF INPUT TEXT
-		group_lst = ["./20news-bydate/20news-bydate-train/alt.atheism",
-					"./20news-bydate/20news-bydate-train/misc.forsale",
-					"./20news-bydate/20news-bydate-train/rec.sport.hockey",
-					"./20news-bydate/20news-bydate-train/talk.politics.guns",
-					"./20news-bydate/20news-bydate-train/comp.sys.mac.hardware",
-					"./20news-bydate/20news-bydate-train/sci.electronics"]
-		self.docs, self.word2id, self.id2word = self.preprocessing(group_lst,toy_size)
+		group_lst = self.dataGroup
+		self.docs, self.word2id, self.id2word = self.preprocessing(group_lst,toy_size,skew)
 		self.N = len(self.docs) #Number of Documents
 		self.M = len(self.word2id) #Number of Words
 		self.ndz = np.zeros([self.N, self.K]) + self.alpha #Doc x Topic
@@ -112,13 +113,25 @@ class LDAManager():
 			print("Topic #" + str(topic) + " contains:")
 			print("	" + str(topicwords[topic]))
 
+	def defaultSetDataGroup(self): #used to set topics to the main set I have been using for liu
+		self.dataGroup = ["./20news-bydate/20news-bydate-train/alt.atheism",
+					"./20news-bydate/20news-bydate-train/misc.forsale",
+					"./20news-bydate/20news-bydate-train/rec.sport.hockey",
+					"./20news-bydate/20news-bydate-train/talk.politics.guns",
+					"./20news-bydate/20news-bydate-train/comp.sys.mac.hardware",
+					"./20news-bydate/20news-bydate-train/sci.electronics"]
+		self.shortDataGroup = ["alt.atheism","misc.forsale","rec.sport.hockey","talk.politics.guns","comp.sys.mac.hardware","sci.electronics"]
+
+	def setDataGroup(self,datagroup): #takes an input of a list of file paths
+		self.dataGroup = datagroup
+		self.shortDataGroup = [shorty.split("/")[-1] for shorty in datagroup]
+
+	def appendDataGroup(self,newGroup): #takes an input of a single file path
+		self.dataGroup.append(newGroup)
+		self.shortDataGroup.append(newGroup.split("/")[-1])
+
 	def initTestSet(self,toy_size=None): #initialzies a test set for our model
-		group_lst = ["./20news-bydate/20news-bydate-test/alt.atheism",
-					"./20news-bydate/20news-bydate-test/misc.forsale",
-					"./20news-bydate/20news-bydate-test/rec.sport.hockey",
-					"./20news-bydate/20news-bydate-test/talk.politics.guns",
-					"./20news-bydate/20news-bydate-test/comp.sys.mac.hardware",
-					"./20news-bydate/20news-bydate-test/sci.electronics"]
+		group_lst = self.dataGroup
 		from stop_words import get_stop_words
 
 		# Create English stop words list
@@ -169,7 +182,6 @@ class LDAManager():
 				correct+=1
 			elif ((doc[1].split(".")[-1] == "forsale" and self.topicNames[doc[0].index(max(doc[0]))]) == "for sale"):
 				correct+=1
-		print("correct =",correct/total)
 		self.predictions = [docTopicPredictions,correct/total]
 
 	def getText(self,doc,group):#helper function to get the text from a target file and strips bad chars
@@ -204,7 +216,7 @@ class LDAManager():
 				break
 		return documents
 
-	def preprocessing(self,group_lst,toy_size=None):
+	def preprocessing(self,group_lst,toy_size=None,skew=False):
 		
 		from stop_words import get_stop_words
 
@@ -214,8 +226,14 @@ class LDAManager():
 		
 		#read in each group of text
 		documents = []
-		for name in group_lst:
-			documents += self.parseGroup(name,toy_size)
+		if skew == True:
+			skewCount=.125
+			for name in group_lst:
+				skewCount*=2
+				documents += self.parseGroup(name,toy_size*skewCount)
+		else:
+			for name in group_lst:
+				documents += self.parseGroup(name,toy_size)
 
 		#init containers 
 		word2id = {}
@@ -336,8 +354,10 @@ class LDAManager():
 		self.train_document_topics_csv() #train: doc | topic | distributions
 		self.document_topics_csv() #test: doc | topic | distributions
 		self.topic_words_csv() #topic: words
+		self.real_pred_topics_csv() #real to pred stats
 
 	def train_document_topics_csv(self):
+		fileName = self.name 
 		col_names = ["document","actual"]
 		col_names += self.topicNames
 		df = pd.DataFrame(columns = col_names) 
@@ -347,9 +367,10 @@ class LDAManager():
 			newRow += doc_topics
 			df.loc[len(df.index)] = newRow
 		print(df)
-		df.to_csv('data/train_documents.csv', index=False)
+		df.to_csv('data/train_documents'+str(fileName)+'.csv', index=False)
 
-	def document_topics_csv(self):
+
+	def document_topics_df(self): 
 		col_names = ["document","actual","labeled"]
 		col_names += self.topicNames
 		df = pd.DataFrame(columns = col_names) 
@@ -357,10 +378,16 @@ class LDAManager():
 			newRow = [num,doc[1].split("/")[-1], self.topicNames[doc[0].index(max(doc[0]))]]
 			newRow += doc[0]
 			df.loc[len(df.index)] = newRow
-		print(df)
-		df.to_csv('data/labeled_documents.csv', index=False)
+		return df
 
-	def topic_words_csv(self): 
+	def document_topics_csv(self):
+		fileName = self.name 
+		df = self.document_topics_df()
+		print(df)
+		df.to_csv('data/labeled_documents'+str(fileName)+'.csv', index=False)
+
+	def topic_words_csv(self):
+		fileName = self.name 
 		maxTopicWordsNum = 50
 		topicwords = []
 		for z in range(0, self.K):
@@ -371,7 +398,47 @@ class LDAManager():
 			topicwords.append(topicword[0 : min(maxTopicWordsNum, len(topicword))])
 		df = pd.DataFrame(topicwords,self.topicNames)
 		print(df)
-		df.to_csv('data/topics.csv')
+		df.to_csv('data/topics'+str(fileName)+'.csv')
+
+	def real_pred_topics_csv(self):
+		#init dataframes
+		fileName = self.name 
+		col_names = ["actual"]
+		col_names += self.topicNames
+		col_names += ["total words", "total docs","accuracy"]
+		doc_topics = self.document_topics_df()
+		df = pd.DataFrame(columns = col_names)
+		group_lst = self.shortDataGroup
+		#calculate accuracy
+		correct_pred = {real_topic:0 for real_topic in group_lst}
+		total_pred = {real_topic:0 for real_topic in group_lst}
+		for num, doc in enumerate(self.predictions[0]):
+			total_pred[doc[1].split("/")[-1]]+=1
+			if (doc[1].split(".")[-1] == self.topicNames[doc[0].index(max(doc[0]))]):
+				correct_pred[doc[1].split("/")[-1]]+=1
+			#hard coded topic name fixes
+			elif ((doc[1].split(".")[-1] == "hardware" and self.topicNames[doc[0].index(max(doc[0]))]) == "apple hardware"):
+				correct_pred[doc[1].split("/")[-1]]+=1
+			elif ((doc[1].split(".")[-1] == "forsale" and self.topicNames[doc[0].index(max(doc[0]))]) == "for sale"):
+				correct_pred[doc[1].split("/")[-1]]+=1
+		#build dataframe
+		for real_topic in group_lst:
+			row = {}
+			row["actual"] = real_topic
+			total = 0
+			for pred_topic in self.topicNames:
+				row[pred_topic] = sum(doc_topics[pred_topic].where(doc_topics["actual"] == real_topic, 0))
+				total += row[pred_topic]
+			row["total words"] = total
+			row["total docs"] = sum(doc_topics["actual"] == real_topic)
+			row["accuracy"] = correct_pred[real_topic]/total_pred[real_topic]
+			# print(df)
+			# print(row)
+			df = df.append(row,ignore_index=True)
+		print(df)
+		df.to_csv('data/real_pred_topics'+str(fileName)+'.csv')
+		
+
 
 
 
