@@ -229,7 +229,7 @@ class LDAManager():
 		if skew == True:
 			skewCount=.1
 			for name in group_lst:
-				skewCount*=4
+				skewCount*=2
 				documents += self.parseGroup(name,toy_size*skewCount)
 		else:
 			for name in group_lst:
