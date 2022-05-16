@@ -227,9 +227,9 @@ class LDAManager():
 		#read in each group of text
 		documents = []
 		if skew == True:
-			skewCount=.125
+			skewCount=.1
 			for name in group_lst:
-				skewCount*=2
+				skewCount*=4
 				documents += self.parseGroup(name,toy_size*skewCount)
 		else:
 			for name in group_lst:
@@ -321,6 +321,27 @@ class LDAManager():
 				print("Topic #" + str(topic+1) + " contains:")
 				print("	" + str(topicwords[topic]))
 				print("\n")
+
+	def visualize_words_print_out(self,maxTopicWordsNum = 15):
+		#print most common words
+		ss = ""
+		topicwords = []
+		for z in range(0, self.K):
+			ids = self.nzw[z, :].argsort()
+			topicword = []
+			for j in ids:
+				topicword.insert(0, self.id2word[j])
+			topicwords.append(topicword[0 : min(maxTopicWordsNum, len(topicword))])
+		for topic in range(self.K):
+			if len(self.topicNames) == self.K:
+				ss += str("Topic '" + self.topicNames[topic] + "' contains:")
+				ss += str("	" + str(topicwords[topic]))
+				ss += str("\n\n")
+			else:
+				ss += str("Topic #" + str(topic+1) + " contains:")
+				ss += str("	" + str(topicwords[topic]))
+				ss += str("\n\n")
+		return ss
 
 
 	def visualize_topics(self):

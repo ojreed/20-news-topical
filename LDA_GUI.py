@@ -56,19 +56,28 @@ def run_LDA():
         LDA.visualize_topics()
         LDA.visualize_words(40)
         LDA.save()
-        label_results()
+        label_results(LDA)
     else:
-        label_results()
         messagebox.showinfo("Result", "Missing Input, Try Again")
 
 
-def label_results():
+def label_results(LDA): #TODO: setup text boxes | grab top words --> likely requiers modification of DM
     TWO = Tk()
     TWO.geometry("600x400")
     TWO.configure(background="#68ace5")
-    TWO.title("LDA Wizard - Label Topics")
-
-
+    TWO.resizable(width=False, height=False)
+    T = Text(TWO, height=20, width=100, wrap=WORD)
+    T.grid(row=0,column=0)
+    T.insert(END, LDA.visualize_words_print_out(20))
+    T.configure(state='disabled')
+    entries = [Entry(TWO) for _ in range(get_K())]
+    x=0
+    for entry in entries:
+        LABLE = Label(TWO, bg="#68ace5",fg="#ffffff", text=x, font=("Helvetica", 15, "bold"), pady=10)
+        LABLE.grid(row=20,column=x*50)
+        entry.grid(row=20,column=x*50+5)
+        x+=2
+        print(x)
     TWO.mainloop()
 
 if __name__ == '__main__':
