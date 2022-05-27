@@ -1,0 +1,601 @@
+document,actual,labeled,for sale,guns,atheism,electronics,apple hardware,religion misc
+0,alt.atheism,atheism,188,376,667,345,272,217
+1,alt.atheism,atheism,397,1036,2425,984,326,1003
+2,alt.atheism,atheism,92,167,280,141,45,93
+3,alt.atheism,atheism,29,48,86,49,46,47
+4,alt.atheism,religion misc,17,20,23,18,18,48
+5,alt.atheism,atheism,71,158,368,148,64,150
+6,alt.atheism,religion misc,14,8,19,11,14,44
+7,alt.atheism,religion misc,23,46,64,43,15,81
+8,alt.atheism,religion misc,42,67,122,75,28,177
+9,alt.atheism,religion misc,8,11,13,12,14,33
+10,alt.atheism,religion misc,14,23,23,19,10,54
+11,alt.atheism,religion misc,13,13,21,16,13,41
+12,alt.atheism,religion misc,21,37,48,28,22,72
+13,alt.atheism,religion misc,45,99,109,77,40,133
+14,alt.atheism,religion misc,37,115,107,77,29,139
+15,alt.atheism,religion misc,25,64,59,38,22,94
+16,alt.atheism,religion misc,12,40,30,22,16,52
+17,alt.atheism,religion misc,20,41,51,36,18,93
+18,alt.atheism,religion misc,41,85,92,69,28,136
+19,alt.atheism,atheism,23,44,64,44,25,45
+20,alt.atheism,religion misc,12,18,18,11,22,24
+21,alt.atheism,atheism,24,36,47,35,28,41
+22,alt.atheism,religion misc,139,376,474,295,117,486
+23,alt.atheism,religion misc,13,13,28,22,15,53
+24,alt.atheism,apple hardware,33,33,44,44,60,29
+25,alt.atheism,atheism,19,20,24,23,19,20
+26,alt.atheism,religion misc,9,19,26,10,9,38
+27,alt.atheism,religion misc,21,31,39,33,16,82
+28,alt.atheism,religion misc,29,57,60,47,41,99
+29,alt.atheism,religion misc,9,9,11,5,10,35
+30,alt.atheism,religion misc,15,23,24,20,10,50
+31,alt.atheism,apple hardware,69,133,159,179,196,89
+32,alt.atheism,atheism,23,40,77,41,17,35
+33,alt.atheism,atheism,65,119,355,128,65,129
+34,alt.atheism,atheism,21,43,58,34,49,56
+35,alt.atheism,atheism,25,54,59,41,46,59
+36,alt.atheism,religion misc,86,161,238,162,63,302
+37,alt.atheism,atheism,30,41,120,37,42,61
+38,alt.atheism,religion misc,12,12,22,13,17,25
+39,alt.atheism,religion misc,30,44,58,50,34,68
+40,alt.atheism,religion misc,22,37,38,29,19,61
+41,alt.atheism,atheism,23,25,64,25,60,59
+42,alt.atheism,religion misc,44,115,156,104,41,158
+43,alt.atheism,religion misc,24,28,30,25,23,85
+44,alt.atheism,atheism,39,80,126,82,32,100
+45,alt.atheism,atheism,77,127,300,141,51,129
+46,alt.atheism,religion misc,31,56,46,58,30,69
+47,alt.atheism,religion misc,22,16,31,21,25,66
+48,alt.atheism,atheism,15,28,40,20,20,37
+49,alt.atheism,atheism,40,105,186,86,64,99
+50,alt.atheism,religion misc,30,71,74,52,29,117
+51,alt.atheism,religion misc,10,9,9,9,11,44
+52,alt.atheism,atheism,41,78,124,63,37,70
+53,alt.atheism,religion misc,49,91,103,71,45,170
+54,alt.atheism,religion misc,19,27,38,22,20,94
+55,alt.atheism,religion misc,14,27,22,17,21,77
+56,alt.atheism,religion misc,21,34,51,39,29,117
+57,alt.atheism,religion misc,14,26,25,28,26,79
+58,alt.atheism,religion misc,22,34,32,26,16,104
+59,alt.atheism,atheism,41,73,137,63,48,62
+60,alt.atheism,religion misc,33,69,63,53,29,129
+61,alt.atheism,religion misc,16,36,39,29,22,66
+62,alt.atheism,religion misc,25,50,46,37,23,94
+63,alt.atheism,religion misc,19,29,38,28,16,71
+64,alt.atheism,atheism,33,51,116,42,34,61
+65,alt.atheism,atheism,23,50,59,42,35,25
+66,alt.atheism,atheism,11,20,63,13,13,17
+67,alt.atheism,religion misc,30,42,35,24,22,52
+68,alt.atheism,religion misc,22,32,32,16,20,46
+69,alt.atheism,atheism,27,43,77,33,31,60
+70,alt.atheism,atheism,41,79,103,67,43,59
+71,alt.atheism,religion misc,33,55,45,42,24,97
+72,alt.atheism,apple hardware,22,28,46,18,47,35
+73,alt.atheism,religion misc,45,97,91,65,38,155
+74,alt.atheism,religion misc,16,21,26,15,21,48
+75,alt.atheism,atheism,27,44,86,39,25,68
+76,alt.atheism,atheism,17,32,65,24,22,41
+77,alt.atheism,atheism,38,63,77,76,55,65
+78,alt.atheism,religion misc,9,26,43,16,16,48
+79,alt.atheism,atheism,33,75,154,57,34,48
+80,alt.atheism,religion misc,34,35,53,33,41,101
+81,alt.atheism,religion misc,19,26,34,20,23,64
+82,alt.atheism,religion misc,33,50,66,44,38,76
+83,alt.atheism,atheism,24,25,49,18,30,26
+84,alt.atheism,atheism,94,198,419,231,65,145
+85,alt.atheism,atheism,46,67,107,54,59,53
+86,alt.atheism,religion misc,29,47,72,54,31,108
+87,alt.atheism,atheism,174,294,711,347,132,245
+88,alt.atheism,religion misc,42,77,111,57,35,125
+89,alt.atheism,religion misc,31,59,54,36,27,84
+90,alt.atheism,religion misc,17,31,19,17,17,57
+91,alt.atheism,guns,23,47,34,27,23,37
+92,alt.atheism,religion misc,16,23,17,14,14,46
+93,alt.atheism,atheism,35,83,183,84,57,85
+94,alt.atheism,religion misc,37,68,56,48,20,99
+95,alt.atheism,atheism,23,33,61,24,22,26
+96,alt.atheism,religion misc,41,72,91,70,40,142
+97,alt.atheism,apple hardware,25,42,37,32,46,41
+98,alt.atheism,atheism,27,38,95,34,58,49
+99,alt.atheism,apple hardware,19,19,40,15,57,23
+100,misc.forsale,apple hardware,26,10,14,19,29,13
+101,misc.forsale,apple hardware,22,19,18,17,38,11
+102,misc.forsale,for sale,37,14,10,13,19,19
+103,misc.forsale,apple hardware,20,11,14,20,42,15
+104,misc.forsale,apple hardware,14,24,13,23,70,17
+105,misc.forsale,apple hardware,13,5,2,7,21,9
+106,misc.forsale,apple hardware,23,14,10,17,26,18
+107,misc.forsale,guns,21,51,38,43,47,29
+108,misc.forsale,for sale,57,37,20,31,32,28
+109,misc.forsale,for sale,196,78,53,133,70,33
+110,misc.forsale,for sale,32,28,17,22,26,17
+111,misc.forsale,apple hardware,22,15,6,17,37,14
+112,misc.forsale,apple hardware,22,14,10,19,31,11
+113,misc.forsale,apple hardware,19,7,2,9,29,12
+114,misc.forsale,apple hardware,30,37,38,44,64,18
+115,misc.forsale,apple hardware,50,43,76,62,180,27
+116,misc.forsale,apple hardware,66,44,37,64,81,36
+117,misc.forsale,apple hardware,39,24,20,41,43,22
+118,misc.forsale,for sale,27,6,5,7,10,6
+119,misc.forsale,apple hardware,42,18,8,27,48,21
+120,misc.forsale,apple hardware,21,17,13,10,40,23
+121,misc.forsale,apple hardware,11,6,8,11,25,5
+122,misc.forsale,apple hardware,96,92,68,110,157,39
+123,misc.forsale,guns,26,45,26,34,25,27
+124,misc.forsale,for sale,30,13,7,12,15,11
+125,misc.forsale,religion misc,35,40,40,34,42,45
+126,misc.forsale,for sale,22,11,13,10,22,11
+127,misc.forsale,for sale,49,28,34,43,35,25
+128,misc.forsale,atheism,51,55,58,54,52,57
+129,misc.forsale,for sale,24,10,7,18,18,5
+130,misc.forsale,electronics,17,12,10,20,19,8
+131,misc.forsale,guns,28,30,20,30,25,21
+132,misc.forsale,electronics,48,47,48,52,43,27
+133,misc.forsale,electronics,31,31,20,35,28,12
+134,misc.forsale,for sale,48,37,33,41,42,26
+135,misc.forsale,apple hardware,26,17,27,26,29,19
+136,misc.forsale,for sale,22,9,9,13,14,9
+137,misc.forsale,for sale,18,5,4,9,14,6
+138,misc.forsale,for sale,48,23,19,34,31,18
+139,misc.forsale,apple hardware,35,18,22,26,39,32
+140,misc.forsale,for sale,46,23,19,32,30,18
+141,misc.forsale,electronics,34,31,29,39,39,21
+142,misc.forsale,for sale,53,33,47,36,40,21
+143,misc.forsale,apple hardware,16,11,8,13,20,12
+144,misc.forsale,for sale,23,14,1,20,18,9
+145,misc.forsale,for sale,36,30,27,36,31,18
+146,misc.forsale,for sale,51,31,27,38,38,23
+147,misc.forsale,apple hardware,22,30,30,30,32,20
+148,misc.forsale,electronics,59,72,82,109,66,61
+149,misc.forsale,for sale,76,35,33,43,59,25
+150,misc.forsale,apple hardware,28,10,14,16,39,18
+151,misc.forsale,electronics,26,29,30,35,34,24
+152,misc.forsale,apple hardware,24,12,16,14,35,11
+153,misc.forsale,electronics,31,37,17,49,38,25
+154,misc.forsale,for sale,22,11,19,18,16,11
+155,misc.forsale,for sale,47,36,27,44,43,25
+156,misc.forsale,for sale,34,19,14,24,17,14
+157,misc.forsale,for sale,20,15,16,14,18,9
+158,misc.forsale,electronics,20,18,4,24,23,7
+159,misc.forsale,apple hardware,18,12,16,14,20,16
+160,misc.forsale,electronics,30,28,26,45,32,25
+161,misc.forsale,apple hardware,31,23,10,18,33,14
+162,misc.forsale,for sale,64,40,45,32,41,30
+163,misc.forsale,guns,13,14,7,13,13,6
+164,misc.forsale,for sale,31,10,14,20,30,7
+165,misc.forsale,apple hardware,69,56,59,69,93,23
+166,misc.forsale,apple hardware,24,20,15,16,36,18
+167,misc.forsale,electronics,97,89,86,124,83,62
+168,misc.forsale,electronics,27,28,29,37,35,19
+169,misc.forsale,apple hardware,49,48,37,43,52,25
+170,misc.forsale,apple hardware,8,14,12,11,18,8
+171,misc.forsale,electronics,49,59,53,60,48,47
+172,misc.forsale,apple hardware,28,24,22,28,34,25
+173,misc.forsale,for sale,28,15,15,13,28,17
+174,misc.forsale,electronics,34,26,33,39,38,23
+175,misc.forsale,for sale,27,14,11,20,26,19
+176,misc.forsale,atheism,14,16,18,15,17,13
+177,misc.forsale,electronics,6,7,4,14,8,3
+178,misc.forsale,electronics,31,27,19,34,29,20
+179,misc.forsale,apple hardware,29,23,26,23,45,25
+180,misc.forsale,apple hardware,36,60,42,58,71,24
+181,misc.forsale,apple hardware,33,36,25,30,40,22
+182,misc.forsale,for sale,52,38,30,49,51,24
+183,misc.forsale,electronics,32,36,35,49,48,28
+184,misc.forsale,for sale,47,40,17,34,45,20
+185,misc.forsale,electronics,34,27,31,48,45,20
+186,misc.forsale,electronics,34,37,40,62,42,40
+187,misc.forsale,apple hardware,27,26,30,24,44,22
+188,misc.forsale,apple hardware,18,16,11,19,23,10
+189,misc.forsale,for sale,36,23,16,24,34,13
+190,misc.forsale,guns,18,22,10,13,21,11
+191,misc.forsale,electronics,19,17,16,25,21,18
+192,misc.forsale,apple hardware,35,38,24,33,43,17
+193,misc.forsale,for sale,20,9,12,5,10,11
+194,misc.forsale,for sale,25,9,10,15,17,13
+195,misc.forsale,apple hardware,22,18,11,24,32,19
+196,misc.forsale,apple hardware,27,13,7,15,34,24
+197,misc.forsale,for sale,40,28,29,34,35,19
+198,misc.forsale,for sale,20,7,8,11,16,17
+199,misc.forsale,electronics,12,16,14,18,14,9
+200,rec.sport.hockey,apple hardware,86,248,251,211,305,155
+201,rec.sport.hockey,apple hardware,30,44,65,48,118,47
+202,rec.sport.hockey,apple hardware,27,54,42,41,72,32
+203,rec.sport.hockey,apple hardware,23,30,18,17,70,17
+204,rec.sport.hockey,apple hardware,11,12,11,22,33,11
+205,rec.sport.hockey,apple hardware,39,86,71,82,97,47
+206,rec.sport.hockey,apple hardware,20,18,16,15,40,20
+207,rec.sport.hockey,apple hardware,5,4,3,8,19,5
+208,rec.sport.hockey,apple hardware,32,69,62,50,111,31
+209,rec.sport.hockey,apple hardware,56,56,43,44,87,40
+210,rec.sport.hockey,apple hardware,49,140,48,109,682,41
+211,rec.sport.hockey,apple hardware,41,94,30,73,406,30
+212,rec.sport.hockey,apple hardware,16,17,19,17,76,15
+213,rec.sport.hockey,electronics,21,24,20,33,31,24
+214,rec.sport.hockey,apple hardware,36,72,49,64,115,41
+215,rec.sport.hockey,apple hardware,25,40,38,41,76,26
+216,rec.sport.hockey,electronics,24,42,39,61,53,38
+217,rec.sport.hockey,apple hardware,45,136,121,104,195,80
+218,rec.sport.hockey,apple hardware,22,20,15,18,53,9
+219,rec.sport.hockey,apple hardware,34,88,104,85,161,69
+220,rec.sport.hockey,apple hardware,29,65,54,51,83,34
+221,rec.sport.hockey,apple hardware,26,61,38,44,219,27
+222,rec.sport.hockey,apple hardware,11,12,5,8,49,9
+223,rec.sport.hockey,electronics,45,63,55,83,63,40
+224,rec.sport.hockey,apple hardware,48,57,48,49,122,34
+225,rec.sport.hockey,apple hardware,60,71,65,76,98,50
+226,rec.sport.hockey,apple hardware,7,9,4,7,19,6
+227,rec.sport.hockey,apple hardware,30,54,28,44,231,18
+228,rec.sport.hockey,apple hardware,22,30,18,30,76,30
+229,rec.sport.hockey,guns,49,132,122,118,99,103
+230,rec.sport.hockey,apple hardware,17,40,37,31,74,20
+231,rec.sport.hockey,apple hardware,27,35,21,36,55,29
+232,rec.sport.hockey,apple hardware,21,21,19,25,64,22
+233,rec.sport.hockey,apple hardware,24,22,15,24,101,19
+234,rec.sport.hockey,apple hardware,22,45,34,33,62,35
+235,rec.sport.hockey,apple hardware,24,35,25,28,64,30
+236,rec.sport.hockey,apple hardware,17,30,25,31,44,23
+237,rec.sport.hockey,apple hardware,16,7,9,15,22,6
+238,rec.sport.hockey,apple hardware,24,47,35,46,70,34
+239,rec.sport.hockey,apple hardware,30,94,80,70,127,49
+240,rec.sport.hockey,apple hardware,10,23,17,20,44,16
+241,rec.sport.hockey,apple hardware,26,21,18,31,61,24
+242,rec.sport.hockey,apple hardware,40,54,30,38,99,37
+243,rec.sport.hockey,apple hardware,33,70,73,61,117,43
+244,rec.sport.hockey,apple hardware,10,14,12,12,47,15
+245,rec.sport.hockey,apple hardware,16,35,29,26,64,27
+246,rec.sport.hockey,apple hardware,44,58,47,63,88,46
+247,rec.sport.hockey,apple hardware,27,25,24,30,76,30
+248,rec.sport.hockey,apple hardware,31,45,38,50,99,37
+249,rec.sport.hockey,apple hardware,16,29,33,27,67,18
+250,rec.sport.hockey,apple hardware,30,62,58,41,79,45
+251,rec.sport.hockey,apple hardware,13,23,30,28,48,18
+252,rec.sport.hockey,apple hardware,19,47,45,48,63,41
+253,rec.sport.hockey,apple hardware,28,34,38,39,69,53
+254,rec.sport.hockey,apple hardware,8,8,5,8,33,12
+255,rec.sport.hockey,apple hardware,46,107,101,89,146,67
+256,rec.sport.hockey,apple hardware,34,48,39,42,61,40
+257,rec.sport.hockey,apple hardware,48,60,64,59,78,53
+258,rec.sport.hockey,apple hardware,17,5,13,12,25,13
+259,rec.sport.hockey,apple hardware,44,75,52,54,91,36
+260,rec.sport.hockey,guns,38,94,87,84,81,56
+261,rec.sport.hockey,apple hardware,61,81,63,77,84,46
+262,rec.sport.hockey,apple hardware,38,92,83,82,134,50
+263,rec.sport.hockey,apple hardware,42,69,54,60,130,37
+264,rec.sport.hockey,apple hardware,220,402,294,313,520,241
+265,rec.sport.hockey,apple hardware,32,73,83,66,123,59
+266,rec.sport.hockey,apple hardware,35,74,71,56,119,37
+267,rec.sport.hockey,apple hardware,28,63,40,46,224,29
+268,rec.sport.hockey,apple hardware,40,69,72,71,80,39
+269,rec.sport.hockey,apple hardware,43,57,23,33,166,41
+270,rec.sport.hockey,apple hardware,38,40,30,36,46,17
+271,rec.sport.hockey,apple hardware,54,129,116,108,157,75
+272,rec.sport.hockey,for sale,23,11,5,19,15,11
+273,rec.sport.hockey,apple hardware,60,154,128,128,176,77
+274,rec.sport.hockey,apple hardware,19,40,25,25,44,26
+275,rec.sport.hockey,apple hardware,16,22,16,18,53,18
+276,rec.sport.hockey,apple hardware,21,33,31,23,55,27
+277,rec.sport.hockey,apple hardware,14,23,8,16,95,9
+278,rec.sport.hockey,electronics,27,37,39,40,31,35
+279,rec.sport.hockey,apple hardware,20,20,5,12,66,12
+280,rec.sport.hockey,apple hardware,114,103,77,95,171,68
+281,rec.sport.hockey,apple hardware,192,50,49,60,359,61
+282,rec.sport.hockey,apple hardware,21,16,22,21,33,15
+283,rec.sport.hockey,apple hardware,19,29,27,25,41,23
+284,rec.sport.hockey,apple hardware,16,23,20,20,38,21
+285,rec.sport.hockey,apple hardware,20,20,23,27,33,24
+286,rec.sport.hockey,apple hardware,36,40,43,38,51,29
+287,rec.sport.hockey,atheism,45,66,68,54,64,49
+288,rec.sport.hockey,guns,43,108,94,74,70,67
+289,rec.sport.hockey,apple hardware,10,29,29,29,33,14
+290,rec.sport.hockey,apple hardware,71,121,80,78,135,80
+291,rec.sport.hockey,apple hardware,27,45,27,46,60,36
+292,rec.sport.hockey,apple hardware,41,56,54,54,95,46
+293,rec.sport.hockey,apple hardware,20,30,23,36,44,28
+294,rec.sport.hockey,apple hardware,17,30,20,19,53,18
+295,rec.sport.hockey,guns,47,86,78,82,65,61
+296,rec.sport.hockey,apple hardware,35,48,39,39,79,27
+297,rec.sport.hockey,electronics,55,86,54,104,73,74
+298,rec.sport.hockey,apple hardware,19,21,14,18,26,14
+299,rec.sport.hockey,apple hardware,14,22,27,19,34,16
+300,talk.politics.guns,guns,30,153,51,53,27,23
+301,talk.politics.guns,guns,111,721,203,203,126,140
+302,talk.politics.guns,guns,47,152,42,45,37,35
+303,talk.politics.guns,guns,245,1547,553,534,269,338
+304,talk.politics.guns,guns,47,153,51,56,34,26
+305,talk.politics.guns,for sale,25,22,11,18,23,8
+306,talk.politics.guns,guns,39,213,80,75,39,57
+307,talk.politics.guns,for sale,23,13,4,10,7,7
+308,talk.politics.guns,religion misc,51,85,88,71,68,98
+309,talk.politics.guns,guns,29,60,41,35,32,41
+310,talk.politics.guns,guns,28,50,43,41,45,34
+311,talk.politics.guns,apple hardware,28,54,31,21,57,37
+312,talk.politics.guns,guns,24,68,43,41,67,42
+313,talk.politics.guns,apple hardware,19,31,14,20,35,31
+314,talk.politics.guns,atheism,20,25,26,16,13,16
+315,talk.politics.guns,apple hardware,21,33,18,16,41,24
+316,talk.politics.guns,guns,15,59,42,38,56,27
+317,talk.politics.guns,guns,30,108,44,40,56,49
+318,talk.politics.guns,guns,34,81,42,40,33,44
+319,talk.politics.guns,guns,63,188,72,71,39,37
+320,talk.politics.guns,apple hardware,38,52,37,36,85,34
+321,talk.politics.guns,electronics,17,15,16,18,9,12
+322,talk.politics.guns,guns,43,266,77,77,48,62
+323,talk.politics.guns,guns,37,111,63,90,46,51
+324,talk.politics.guns,guns,30,83,58,53,33,60
+325,talk.politics.guns,guns,29,107,58,47,27,53
+326,talk.politics.guns,guns,42,258,106,88,34,62
+327,talk.politics.guns,guns,47,203,83,83,43,76
+328,talk.politics.guns,guns,27,120,34,41,25,27
+329,talk.politics.guns,guns,87,256,140,185,92,99
+330,talk.politics.guns,guns,17,55,17,21,25,23
+331,talk.politics.guns,guns,26,103,34,27,25,25
+332,talk.politics.guns,guns,43,162,62,64,43,49
+333,talk.politics.guns,guns,67,227,113,117,78,91
+334,talk.politics.guns,guns,39,60,29,26,38,28
+335,talk.politics.guns,guns,38,74,42,42,26,43
+336,talk.politics.guns,guns,29,46,29,20,18,42
+337,talk.politics.guns,guns,35,55,24,32,34,33
+338,talk.politics.guns,guns,40,128,43,53,50,46
+339,talk.politics.guns,guns,54,108,68,92,48,56
+340,talk.politics.guns,guns,32,55,31,34,22,44
+341,talk.politics.guns,guns,30,70,41,44,25,36
+342,talk.politics.guns,guns,22,70,24,28,16,16
+343,talk.politics.guns,guns,46,120,76,63,62,55
+344,talk.politics.guns,guns,25,130,41,39,25,29
+345,talk.politics.guns,guns,61,186,106,113,50,78
+346,talk.politics.guns,guns,60,125,88,93,42,57
+347,talk.politics.guns,apple hardware,36,44,34,35,54,36
+348,talk.politics.guns,guns,20,37,13,15,35,21
+349,talk.politics.guns,guns,30,81,29,27,25,40
+350,talk.politics.guns,guns,18,34,18,18,31,21
+351,talk.politics.guns,atheism,37,75,77,76,43,60
+352,talk.politics.guns,guns,39,58,34,35,23,28
+353,talk.politics.guns,guns,64,243,96,103,69,71
+354,talk.politics.guns,guns,19,116,38,36,26,34
+355,talk.politics.guns,guns,105,451,123,165,112,108
+356,talk.politics.guns,guns,46,123,68,66,46,58
+357,talk.politics.guns,guns,44,187,66,66,39,37
+358,talk.politics.guns,guns,43,198,74,58,47,54
+359,talk.politics.guns,guns,71,259,122,138,41,90
+360,talk.politics.guns,guns,71,284,102,107,87,102
+361,talk.politics.guns,guns,24,116,45,57,34,37
+362,talk.politics.guns,guns,18,96,27,32,24,19
+363,talk.politics.guns,guns,28,145,48,48,26,30
+364,talk.politics.guns,guns,47,83,45,53,49,39
+365,talk.politics.guns,guns,61,112,60,71,50,54
+366,talk.politics.guns,guns,20,77,40,38,18,20
+367,talk.politics.guns,guns,44,133,80,67,47,63
+368,talk.politics.guns,guns,40,125,39,41,38,37
+369,talk.politics.guns,guns,21,35,16,15,15,15
+370,talk.politics.guns,guns,18,71,15,15,17,26
+371,talk.politics.guns,guns,29,107,46,50,19,29
+372,talk.politics.guns,guns,58,325,140,139,59,101
+373,talk.politics.guns,guns,34,56,35,40,44,40
+374,talk.politics.guns,guns,59,200,103,94,54,71
+375,talk.politics.guns,guns,83,461,317,225,102,184
+376,talk.politics.guns,guns,34,146,49,70,33,31
+377,talk.politics.guns,guns,80,257,166,156,50,97
+378,talk.politics.guns,guns,92,399,177,203,79,109
+379,talk.politics.guns,guns,16,92,36,29,27,30
+380,talk.politics.guns,guns,36,170,63,49,37,43
+381,talk.politics.guns,guns,74,289,115,138,62,76
+382,talk.politics.guns,guns,14,97,49,36,21,48
+383,talk.politics.guns,guns,86,274,152,162,78,99
+384,talk.politics.guns,apple hardware,26,25,12,16,37,15
+385,talk.politics.guns,guns,73,329,146,152,58,98
+386,talk.politics.guns,guns,85,288,135,148,59,82
+387,talk.politics.guns,guns,22,49,29,27,22,26
+388,talk.politics.guns,guns,41,207,94,95,49,106
+389,talk.politics.guns,guns,29,43,37,38,34,32
+390,talk.politics.guns,guns,122,422,248,200,101,161
+391,talk.politics.guns,guns,22,57,26,27,26,19
+392,talk.politics.guns,guns,42,157,67,81,55,57
+393,talk.politics.guns,guns,75,342,224,165,68,137
+394,talk.politics.guns,religion misc,12,37,20,19,11,39
+395,talk.politics.guns,guns,25,91,30,44,27,25
+396,talk.politics.guns,guns,45,110,45,58,24,43
+397,talk.politics.guns,guns,52,236,143,135,50,97
+398,talk.politics.guns,apple hardware,30,37,24,29,61,20
+399,talk.politics.guns,apple hardware,32,59,31,31,68,33
+400,comp.sys.mac.hardware,apple hardware,64,47,56,38,92,33
+401,comp.sys.mac.hardware,apple hardware,23,34,30,32,42,27
+402,comp.sys.mac.hardware,for sale,38,28,19,21,35,25
+403,comp.sys.mac.hardware,for sale,47,16,20,33,41,25
+404,comp.sys.mac.hardware,for sale,69,30,40,40,36,30
+405,comp.sys.mac.hardware,apple hardware,26,9,11,14,29,7
+406,comp.sys.mac.hardware,apple hardware,25,16,17,24,43,17
+407,comp.sys.mac.hardware,apple hardware,37,17,16,24,47,13
+408,comp.sys.mac.hardware,apple hardware,15,7,7,10,20,12
+409,comp.sys.mac.hardware,apple hardware,29,36,24,33,82,20
+410,comp.sys.mac.hardware,for sale,46,22,21,19,28,8
+411,comp.sys.mac.hardware,for sale,41,23,21,32,28,13
+412,comp.sys.mac.hardware,for sale,31,19,19,26,17,12
+413,comp.sys.mac.hardware,apple hardware,61,58,53,66,67,45
+414,comp.sys.mac.hardware,apple hardware,20,13,9,13,22,9
+415,comp.sys.mac.hardware,for sale,24,9,7,11,19,4
+416,comp.sys.mac.hardware,for sale,78,59,50,67,75,38
+417,comp.sys.mac.hardware,apple hardware,30,57,43,44,63,19
+418,comp.sys.mac.hardware,apple hardware,70,127,125,132,173,85
+419,comp.sys.mac.hardware,apple hardware,17,5,0,13,20,8
+420,comp.sys.mac.hardware,atheism,37,55,63,50,47,36
+421,comp.sys.mac.hardware,for sale,36,20,14,21,33,17
+422,comp.sys.mac.hardware,for sale,44,20,17,32,33,24
+423,comp.sys.mac.hardware,apple hardware,15,9,11,12,26,11
+424,comp.sys.mac.hardware,for sale,113,61,49,51,54,39
+425,comp.sys.mac.hardware,apple hardware,17,12,11,17,33,17
+426,comp.sys.mac.hardware,for sale,30,13,13,12,30,11
+427,comp.sys.mac.hardware,for sale,64,51,52,59,46,34
+428,comp.sys.mac.hardware,apple hardware,30,21,15,26,36,22
+429,comp.sys.mac.hardware,apple hardware,41,20,29,29,81,14
+430,comp.sys.mac.hardware,apple hardware,37,19,29,32,54,23
+431,comp.sys.mac.hardware,for sale,27,10,6,13,27,12
+432,comp.sys.mac.hardware,apple hardware,45,31,31,29,54,24
+433,comp.sys.mac.hardware,apple hardware,42,33,29,39,58,26
+434,comp.sys.mac.hardware,apple hardware,29,44,29,35,94,23
+435,comp.sys.mac.hardware,apple hardware,15,8,14,19,28,16
+436,comp.sys.mac.hardware,for sale,57,30,29,41,48,22
+437,comp.sys.mac.hardware,apple hardware,11,6,8,14,27,6
+438,comp.sys.mac.hardware,apple hardware,22,25,15,30,36,17
+439,comp.sys.mac.hardware,electronics,31,48,55,69,38,34
+440,comp.sys.mac.hardware,for sale,23,11,5,12,20,8
+441,comp.sys.mac.hardware,apple hardware,41,32,35,39,80,36
+442,comp.sys.mac.hardware,apple hardware,45,33,35,46,68,29
+443,comp.sys.mac.hardware,electronics,42,73,61,85,81,51
+444,comp.sys.mac.hardware,electronics,43,38,42,64,51,33
+445,comp.sys.mac.hardware,apple hardware,26,16,18,19,55,12
+446,comp.sys.mac.hardware,apple hardware,50,47,46,47,67,34
+447,comp.sys.mac.hardware,for sale,139,40,50,82,38,30
+448,comp.sys.mac.hardware,apple hardware,39,24,15,21,45,16
+449,comp.sys.mac.hardware,apple hardware,15,13,11,14,40,10
+450,comp.sys.mac.hardware,electronics,33,11,9,34,25,17
+451,comp.sys.mac.hardware,apple hardware,46,22,19,26,48,16
+452,comp.sys.mac.hardware,for sale,24,20,15,22,22,14
+453,comp.sys.mac.hardware,for sale,60,40,24,41,35,21
+454,comp.sys.mac.hardware,apple hardware,21,18,15,27,33,15
+455,comp.sys.mac.hardware,apple hardware,43,42,41,50,67,31
+456,comp.sys.mac.hardware,apple hardware,26,26,27,29,66,25
+457,comp.sys.mac.hardware,electronics,29,16,18,31,21,13
+458,comp.sys.mac.hardware,apple hardware,23,17,11,22,31,15
+459,comp.sys.mac.hardware,apple hardware,34,37,27,43,49,20
+460,comp.sys.mac.hardware,apple hardware,43,65,58,62,70,40
+461,comp.sys.mac.hardware,apple hardware,34,52,49,58,64,36
+462,comp.sys.mac.hardware,apple hardware,22,18,15,18,39,18
+463,comp.sys.mac.hardware,apple hardware,29,21,21,25,49,18
+464,comp.sys.mac.hardware,electronics,99,126,109,136,103,71
+465,comp.sys.mac.hardware,apple hardware,23,15,10,19,33,23
+466,comp.sys.mac.hardware,apple hardware,38,33,26,39,90,26
+467,comp.sys.mac.hardware,electronics,32,36,41,47,40,31
+468,comp.sys.mac.hardware,apple hardware,34,29,29,25,92,19
+469,comp.sys.mac.hardware,apple hardware,19,9,8,13,37,6
+470,comp.sys.mac.hardware,electronics,51,66,55,87,82,48
+471,comp.sys.mac.hardware,electronics,37,27,29,51,45,19
+472,comp.sys.mac.hardware,apple hardware,21,22,26,22,45,18
+473,comp.sys.mac.hardware,apple hardware,36,30,29,28,54,36
+474,comp.sys.mac.hardware,atheism,72,86,92,74,81,53
+475,comp.sys.mac.hardware,apple hardware,20,14,9,11,38,32
+476,comp.sys.mac.hardware,apple hardware,25,21,15,23,31,16
+477,comp.sys.mac.hardware,for sale,62,43,47,56,55,36
+478,comp.sys.mac.hardware,apple hardware,42,30,34,38,51,26
+479,comp.sys.mac.hardware,for sale,64,31,32,48,47,28
+480,comp.sys.mac.hardware,electronics,37,33,32,44,41,29
+481,comp.sys.mac.hardware,for sale,33,18,18,33,19,14
+482,comp.sys.mac.hardware,apple hardware,32,37,32,40,73,25
+483,comp.sys.mac.hardware,electronics,91,77,89,185,104,59
+484,comp.sys.mac.hardware,electronics,91,77,89,185,104,59
+485,comp.sys.mac.hardware,apple hardware,39,34,26,49,57,28
+486,comp.sys.mac.hardware,apple hardware,43,39,50,68,93,33
+487,comp.sys.mac.hardware,apple hardware,16,27,21,27,64,24
+488,comp.sys.mac.hardware,electronics,35,33,20,44,39,26
+489,comp.sys.mac.hardware,apple hardware,62,73,86,75,104,49
+490,comp.sys.mac.hardware,for sale,51,15,17,20,24,14
+491,comp.sys.mac.hardware,for sale,42,12,7,18,15,10
+492,comp.sys.mac.hardware,apple hardware,54,38,52,54,55,36
+493,comp.sys.mac.hardware,apple hardware,37,31,26,31,57,36
+494,comp.sys.mac.hardware,for sale,57,29,19,30,26,27
+495,comp.sys.mac.hardware,apple hardware,39,30,36,41,75,37
+496,comp.sys.mac.hardware,apple hardware,128,134,121,141,251,86
+497,comp.sys.mac.hardware,for sale,67,21,14,27,29,18
+498,comp.sys.mac.hardware,apple hardware,32,36,36,56,66,23
+499,comp.sys.mac.hardware,for sale,133,65,38,51,67,26
+500,sci.electronics,electronics,53,61,52,114,36,34
+501,sci.electronics,for sale,353,86,96,91,114,45
+502,sci.electronics,electronics,116,90,89,168,58,49
+503,sci.electronics,apple hardware,20,13,9,17,31,18
+504,sci.electronics,for sale,38,8,10,16,18,15
+505,sci.electronics,for sale,85,29,34,32,26,38
+506,sci.electronics,apple hardware,22,13,5,10,35,18
+507,sci.electronics,apple hardware,54,45,44,49,147,41
+508,sci.electronics,electronics,38,19,24,64,39,23
+509,sci.electronics,for sale,111,30,27,48,39,20
+510,sci.electronics,for sale,46,25,23,22,28,20
+511,sci.electronics,for sale,31,11,11,11,16,29
+512,sci.electronics,for sale,66,42,37,57,34,27
+513,sci.electronics,apple hardware,28,10,16,17,34,15
+514,sci.electronics,for sale,101,37,37,60,87,34
+515,sci.electronics,for sale,84,32,22,38,61,27
+516,sci.electronics,for sale,26,8,9,21,13,9
+517,sci.electronics,electronics,41,19,21,53,20,25
+518,sci.electronics,for sale,59,37,28,49,39,27
+519,sci.electronics,for sale,82,81,53,76,49,41
+520,sci.electronics,for sale,122,69,58,100,41,31
+521,sci.electronics,for sale,56,46,45,48,41,25
+522,sci.electronics,apple hardware,8,9,8,7,20,9
+523,sci.electronics,for sale,29,27,11,14,17,11
+524,sci.electronics,for sale,223,132,122,144,66,85
+525,sci.electronics,for sale,30,20,18,25,23,23
+526,sci.electronics,for sale,30,12,11,21,18,11
+527,sci.electronics,for sale,195,101,85,130,52,74
+528,sci.electronics,electronics,83,71,57,101,36,44
+529,sci.electronics,for sale,39,32,26,37,25,33
+530,sci.electronics,electronics,62,54,44,72,43,34
+531,sci.electronics,for sale,107,36,24,46,31,38
+532,sci.electronics,for sale,89,40,46,54,48,43
+533,sci.electronics,for sale,25,17,14,15,16,11
+534,sci.electronics,for sale,36,21,12,25,28,19
+535,sci.electronics,for sale,103,18,17,16,51,25
+536,sci.electronics,electronics,80,75,59,127,48,40
+537,sci.electronics,for sale,62,29,28,46,40,30
+538,sci.electronics,for sale,105,41,35,58,32,30
+539,sci.electronics,electronics,43,55,49,160,29,30
+540,sci.electronics,apple hardware,21,14,5,11,38,18
+541,sci.electronics,for sale,61,18,15,23,21,23
+542,sci.electronics,for sale,214,97,104,127,45,60
+543,sci.electronics,for sale,108,59,39,71,28,41
+544,sci.electronics,for sale,75,26,32,36,38,34
+545,sci.electronics,for sale,72,38,43,48,28,40
+546,sci.electronics,for sale,62,27,30,60,27,25
+547,sci.electronics,for sale,109,51,45,73,25,32
+548,sci.electronics,electronics,34,28,31,41,32,21
+549,sci.electronics,for sale,23,10,9,12,20,22
+550,sci.electronics,electronics,122,92,91,132,51,64
+551,sci.electronics,electronics,19,12,12,26,16,7
+552,sci.electronics,for sale,20,12,18,13,18,15
+553,sci.electronics,apple hardware,38,19,34,37,66,27
+554,sci.electronics,for sale,30,11,10,11,24,21
+555,sci.electronics,electronics,58,60,41,63,35,33
+556,sci.electronics,electronics,22,18,7,23,14,13
+557,sci.electronics,for sale,52,33,23,42,29,27
+558,sci.electronics,for sale,76,29,29,43,19,28
+559,sci.electronics,for sale,127,53,56,57,34,53
+560,sci.electronics,for sale,100,67,47,55,24,31
+561,sci.electronics,apple hardware,56,32,46,47,77,26
+562,sci.electronics,electronics,30,16,8,59,30,19
+563,sci.electronics,for sale,83,30,32,45,16,27
+564,sci.electronics,for sale,71,27,19,32,20,21
+565,sci.electronics,for sale,51,34,26,28,18,32
+566,sci.electronics,atheism,106,117,120,114,117,66
+567,sci.electronics,for sale,18,11,10,6,18,11
+568,sci.electronics,for sale,182,84,80,123,61,53
+569,sci.electronics,for sale,13,8,7,8,6,9
+570,sci.electronics,electronics,107,60,72,115,87,40
+571,sci.electronics,apple hardware,32,21,25,22,43,14
+572,sci.electronics,electronics,19,13,8,23,11,10
+573,sci.electronics,for sale,114,45,34,54,37,33
+574,sci.electronics,for sale,178,94,96,94,38,54
+575,sci.electronics,for sale,77,22,27,29,28,15
+576,sci.electronics,for sale,131,71,62,71,34,64
+577,sci.electronics,electronics,23,22,25,28,14,19
+578,sci.electronics,for sale,122,102,87,93,36,58
+579,sci.electronics,apple hardware,75,60,61,74,82,40
+580,sci.electronics,for sale,19,9,7,7,12,8
+581,sci.electronics,apple hardware,70,49,43,45,81,22
+582,sci.electronics,electronics,56,40,27,57,23,27
+583,sci.electronics,for sale,73,31,37,50,26,34
+584,sci.electronics,for sale,85,51,46,37,20,32
+585,sci.electronics,for sale,121,83,69,109,43,37
+586,sci.electronics,apple hardware,27,13,7,16,33,23
+587,sci.electronics,electronics,22,8,10,23,9,7
+588,sci.electronics,for sale,101,44,60,72,41,55
+589,sci.electronics,for sale,123,76,73,103,41,40
+590,sci.electronics,for sale,61,32,23,48,24,22
+591,sci.electronics,for sale,188,100,71,132,46,59
+592,sci.electronics,electronics,31,29,30,32,28,18
+593,sci.electronics,for sale,72,30,25,40,31,21
+594,sci.electronics,for sale,38,13,14,24,23,23
+595,sci.electronics,for sale,73,25,25,36,18,16
+596,sci.electronics,for sale,193,106,105,148,54,62
+597,sci.electronics,electronics,43,31,21,56,46,21
+598,sci.electronics,apple hardware,27,8,5,16,35,15
+599,sci.electronics,electronics,38,26,25,40,9,22

@@ -1,0 +1,7 @@
+,actual,guns,electronics,for sale,hockey,atheism,apple hardware,total words,total docs,accuracy
+0,alt.atheism,5725,6787,3426,3529,13641,3788,36896,100,0.87
+1,misc.forsale,2261,2262,5226,2179,2187,3533,17648,100,0.73
+2,rec.sport.hockey,3851,5775,3124,11585,3536,3116,30987,100,0.81
+3,talk.politics.guns,14554,6555,3830,4336,6474,4212,39961,100,0.84
+4,comp.sys.mac.hardware,2832,3299,3074,2282,2890,6261,20638,100,0.78
+5,sci.electronics,3525,4085,4299,2643,3430,6710,24692,100,0.05
